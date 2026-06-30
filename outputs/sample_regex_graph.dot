@@ -1,0 +1,32 @@
+digraph regex_graph {
+  rankdir=LR;
+  "0" [label="START", shape="doublecircle", color="black", fillcolor="#eeeeee", style="filled"];
+  "1" [label="Start G1", shape="component", color="blue", fillcolor="#e3f2fd", style="filled"];
+  "2" [label="Split", shape="diamond", color="black", fillcolor="white"];
+  "3" [label="'d'", shape="box", color="green", fillcolor="white"];
+  "4" [label="'o'", shape="box", color="green", fillcolor="white"];
+  "5" [label="'g'", shape="box", color="green", fillcolor="white"];
+  "6" [label="End G1", shape="component", color="blue", fillcolor="#e3f2fd", style="filled"];
+  "7" [label="Loop 1-2", shape="diamond", color="black", fillcolor="white"];
+  "8" [label="[...] (10)\\n(10 chars)", shape="box", color="purple", fillcolor="#f3e5f5", style="filled"];
+  "9" [label="END", shape="doublecircle", color="black", fillcolor="#eeeeee", style="filled"];
+  "10" [label="[...] (10)\\n(10 chars)", shape="box", color="purple", fillcolor="#f3e5f5", style="filled"];
+  "11" [label="'c'", shape="box", color="green", fillcolor="white"];
+  "12" [label="'a'", shape="box", color="green", fillcolor="white"];
+  "13" [label="'t'", shape="box", color="green", fillcolor="white"];
+  "0" -> "1";
+  "1" -> "2";
+  "2" -> "11";
+  "2" -> "3";
+  "3" -> "4";
+  "4" -> "5";
+  "5" -> "6";
+  "6" -> "7";
+  "7" -> "8";
+  "8" -> "10";
+  "8" -> "9";
+  "10" -> "9";
+  "11" -> "12";
+  "12" -> "13";
+  "13" -> "6";
+}

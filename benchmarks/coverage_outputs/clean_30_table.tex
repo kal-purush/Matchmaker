@@ -1,0 +1,36 @@
+% Requires \usepackage{booktabs}. If the table is too wide, wrap it with adjustbox.
+% Optional: \usepackage{adjustbox}
+\begin{table*}[t]
+\centering
+\caption{Code and branch coverage achieved by each regex sample generator. The best result per target and metric is bolded.}
+\label{tab:regex-function-coverage}
+\small
+\begin{tabular}{lrrrrrrrr}
+\toprule
+\textbf{Target} &
+\multicolumn{4}{c}{\textbf{Code Coverage}} &
+\multicolumn{4}{c}{\textbf{Branch Coverage}} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+& \textbf{RegexInst.} & \textbf{exrex} & \textbf{Xeger} & \textbf{EGRET} & \textbf{RegexInst.} & \textbf{exrex} & \textbf{Xeger} & \textbf{EGRET} \\
+\midrule
+email\_stdlib\_parseaddr & \textbf{14.96} & 14.40 & 14.40 & \textbf{14.96} & \textbf{18.10} & 17.24 & 17.24 & \textbf{18.10} \\
+email\_django\_core & \textbf{5.08} & 4.12 & 3.47 & 4.60 & \textbf{9.78} & 7.61 & 6.52 & 8.70 \\
+email\_validator\_package & \textbf{45.86} & 36.18 & 39.53 & 37.66 & \textbf{44.90} & 33.93 & 36.90 & 36.61 \\
+ip\_stdlib\_ipaddress & \textbf{12.51} & 2.15 & 7.03 & 9.40 & \textbf{16.67} & 2.92 & 9.36 & 11.99 \\
+ip\_django\_core & \textbf{3.63} & 0.97 & 2.66 & \textbf{3.63} & \textbf{2.17} & 0.00 & 1.09 & \textbf{2.17} \\
+ip\_pydantic & \textbf{11.13} & 10.10 & 10.74 & 11.06 & \textbf{12.07} & 11.84 & 11.84 & 11.84 \\
+url\_stdlib\_urllib & \textbf{11.48} & 9.09 & 10.11 & 10.11 & \textbf{13.58} & 10.08 & 12.02 & 12.02 \\
+url\_django\_core & \textbf{10.73} & 8.47 & 9.44 & 8.96 & \textbf{19.20} & 14.13 & 16.30 & 15.22 \\
+url\_pydantic & \textbf{11.22} & \textbf{11.22} & \textbf{11.22} & \textbf{11.22} & \textbf{14.47} & \textbf{14.47} & \textbf{14.47} & \textbf{14.47} \\
+datetime\_stdlib\_strptime & \textbf{16.76} & 15.91 & 15.91 & 16.26 & \textbf{18.47} & 17.35 & 17.35 & 17.86 \\
+datetime\_django\_utils & \textbf{23.29} & 2.74 & 19.18 & 20.55 & \textbf{27.78} & 0.00 & 16.67 & 22.22 \\
+datetime\_dateutil & \textbf{52.55} & 28.83 & 28.83 & 35.77 & \textbf{54.44} & 27.78 & 27.78 & 35.56 \\
+uuid\_stdlib & \textbf{4.60} & 4.24 & 4.24 & \textbf{4.60} & \textbf{6.58} & 5.92 & 5.92 & \textbf{6.58} \\
+uuid\_django\_model & \textbf{2.48} & 1.99 & 1.99 & \textbf{2.48} & \textbf{0.89} & 0.45 & 0.45 & \textbf{0.89} \\
+uuid\_pydantic & \textbf{28.37} & \textbf{28.37} & \textbf{28.37} & \textbf{28.37} & \textbf{20.45} & \textbf{20.45} & \textbf{20.45} & \textbf{20.45} \\
+domain\_stdlib\_idna & \textbf{10.50} & 8.95 & 8.95 & 9.88 & \textbf{13.21} & 11.32 & 11.32 & 12.26 \\
+domain\_django\_core & \textbf{3.15} & 2.66 & 3.14 & 2.42 & \textbf{5.43} & 4.35 & 5.40 & 3.26 \\
+domain\_pydantic & \textbf{11.22} & \textbf{11.22} & \textbf{11.22} & \textbf{11.22} & \textbf{14.47} & \textbf{14.47} & \textbf{14.47} & \textbf{14.47} \\
+\bottomrule
+\end{tabular}
+\end{table*}

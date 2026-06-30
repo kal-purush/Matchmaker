@@ -1,0 +1,13 @@
+{
+  "n": 10,
+  "seed": 0,
+  "validate": false,
+  "runs": [],
+  "errors": [
+    {
+      "target": "uuid_stdlib",
+      "error_type": "RuntimeError",
+      "error": "coverage is not installed"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+% Requires \usepackage{booktabs}. If the table is too wide, wrap it with adjustbox.
+% Optional: \usepackage{adjustbox}
+\begin{table*}[t]
+\centering
+\caption{Code and branch coverage achieved by each regex sample generator. The best result per target and metric is bolded.}
+\label{tab:regex-function-coverage}
+\small
+\begin{tabular}{lrrrrrrrr}
+\toprule
+\textbf{Target} &
+\multicolumn{4}{c}{\textbf{Code Coverage}} &
+\multicolumn{4}{c}{\textbf{Branch Coverage}} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+& \textbf{RegexInst.} & \textbf{exrex} & \textbf{Xeger} & \textbf{EGRET} & \textbf{RegexInst.} & \textbf{exrex} & \textbf{Xeger} & \textbf{EGRET} \\
+\midrule
+uuid\_stdlib & \textbf{4.60} & 4.24 & 4.24 & \textbf{4.60} & \textbf{6.58} & 5.92 & 5.92 & \textbf{6.58} \\
+uuid\_django\_model & \textbf{2.48} & 1.99 & 1.99 & \textbf{2.48} & \textbf{0.89} & 0.45 & 0.45 & \textbf{0.89} \\
+uuid\_pydantic & \textbf{28.46} & 28.37 & 28.37 & 28.37 & \textbf{20.76} & 20.45 & 20.45 & 20.45 \\
+\bottomrule
+\end{tabular}
+\end{table*}

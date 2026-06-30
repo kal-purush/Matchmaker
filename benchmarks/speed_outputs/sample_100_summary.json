@@ -1,0 +1,65 @@
+{
+  "benchmark": "regex_generation_speed",
+  "complexity_counts": {
+    "exponential": 100
+  },
+  "corpus": "exponential-and-polynomial-regexes",
+  "elapsed_seconds": 3.2363605410209857,
+  "mode": "diverse",
+  "patterns_paths": [
+    "/Users/masudhasan/Music/regex_testing/exponential-regexes.json",
+    "/Users/masudhasan/Music/regex_testing/polynomial-regexes.json"
+  ],
+  "requested_patterns": 100,
+  "samples_per_pattern": 100,
+  "seed": 0,
+  "selected_patterns": 100,
+  "timeout_seconds_per_tool_pattern": 10.0,
+  "tool_keys": [
+    "ours"
+  ],
+  "tool_summaries": [
+    {
+      "avg_elapsed_seconds_all": 0.021456342482124455,
+      "avg_elapsed_seconds_ok": 0.02202898419192551,
+      "by_complexity": {
+        "exponential": {
+          "failed": 3,
+          "ok": 95,
+          "partial": 2,
+          "runs": 100,
+          "samples_per_second": 4493.776144761331,
+          "status_counts": {
+            "failed": 3,
+            "ok": 95,
+            "partial": 2
+          },
+          "timeout": 0,
+          "total_elapsed_seconds": 2.1456342482124455,
+          "total_generated_samples": 9642
+        }
+      },
+      "completed_without_failure": 97,
+      "failed": 3,
+      "ok": 95,
+      "partial": 2,
+      "runs": 100,
+      "samples_per_second": 4493.776144761331,
+      "status_counts": {
+        "failed": 3,
+        "ok": 95,
+        "partial": 2
+      },
+      "timeout": 0,
+      "tool": "RegexInstantiator",
+      "total_elapsed_seconds": 2.1456342482124455,
+      "total_generated_samples": 9642,
+      "total_unique_samples": 9642
+    }
+  ],
+  "tools": [
+    "RegexInstantiator"
+  ],
+  "total_runs": 100,
+  "validate": false
+}

@@ -1,0 +1,426 @@
+{
+  "n_positive": 1000,
+  "n_negative": 1000,
+  "runs": 30,
+  "seed": 0,
+  "generator_validate": true,
+  "positive_mode": "diverse",
+  "negative_mode": "compact_graph",
+  "tools": [
+    [
+      "RegexInstantiator",
+      "ours"
+    ],
+    [
+      "exrex",
+      "exrex"
+    ],
+    [
+      "Xeger",
+      "xeger"
+    ],
+    [
+      "EGRET",
+      "egret"
+    ]
+  ],
+  "targets": [
+    {
+      "name": "uuid_stdlib",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "note": "Canonical UUID regex for generation; validated by stdlib uuid.UUID."
+    },
+    {
+      "name": "uuid_django_model",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "note": "Canonical UUID regex for generation; validated by Django UUIDField.to_python."
+    },
+    {
+      "name": "uuid_pydantic",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "note": "Canonical UUID regex for generation; validated by pydantic TypeAdapter(uuid.UUID)."
+    }
+  ],
+  "results": [
+    {
+      "target": "uuid_django_model",
+      "tool": "EGRET",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 36,
+      "negatives": 64,
+      "total_samples": 100,
+      "accepted": 36,
+      "rejected": 64,
+      "code_coverage": 0.024848150193263394,
+      "branch_coverage": 0.008928571428571428,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.4848150193263394,
+        "mean_branch_coverage": 0.008928571428571428
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "RegexInstantiator",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1034,
+      "rejected": 966,
+      "code_coverage": 0.024848150193263394,
+      "branch_coverage": 0.008928571428571428,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.4848150193263394,
+        "mean_branch_coverage": 0.008928571428571428
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "Xeger",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.019878520154610713,
+      "branch_coverage": 0.004464285714285714,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 1.9878520154610713,
+        "mean_branch_coverage": 0.004464285714285714
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "exrex",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.019878520154610713,
+      "branch_coverage": 0.004464285714285714,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 1.9878520154610713,
+        "mean_branch_coverage": 0.004464285714285714
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "RegexInstantiator",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1000,
+      "rejected": 1000,
+      "code_coverage": 0.2845572836857697,
+      "branch_coverage": 0.20760381593714927,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.45572836857697,
+        "mean_branch_coverage": 0.20760381593714927
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "EGRET",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 36,
+      "negatives": 64,
+      "total_samples": 100,
+      "accepted": 36,
+      "rejected": 64,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "Xeger",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "exrex",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "EGRET",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 36,
+      "negatives": 64,
+      "total_samples": 100,
+      "accepted": 36,
+      "rejected": 64,
+      "code_coverage": 0.04604051565377532,
+      "branch_coverage": 0.06578947368421052,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.6040515653775325,
+        "mean_branch_coverage": 0.06578947368421052
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "RegexInstantiator",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1034,
+      "rejected": 966,
+      "code_coverage": 0.04604051565377532,
+      "branch_coverage": 0.06578947368421052,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.6040515653775325,
+        "mean_branch_coverage": 0.06578947368421052
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "Xeger",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.0423572744014733,
+      "branch_coverage": 0.05921052631578947,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.23572744014733,
+        "mean_branch_coverage": 0.05921052631578947
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "exrex",
+      "regex": "(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|\\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\}|urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9a-fA-F]{32})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.0423572744014733,
+      "branch_coverage": 0.05921052631578947,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.23572744014733,
+        "mean_branch_coverage": 0.05921052631578947
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    }
+  ],
+  "raw_results_jsonl": "/Users/masudhasan/Music/regex_testing/regex_positive_generator/benchmarks/coverage_outputs/uuid_regex_updated_results.jsonl",
+  "statistical_tests": [
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "exrex",
+      "metric": "code_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.3185436274292763,
+      "median_delta_points": 0.3683241252302023,
+      "ci95_mean_delta_points": [
+        0.25819370362726446,
+        0.39156196675396143
+      ],
+      "wins": 61,
+      "ties": 29,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "exrex",
+      "metric": "branch_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.47005314914671625,
+      "median_delta_points": 0.4464285714285714,
+      "ci95_mean_delta_points": [
+        0.331296992481203,
+        0.6979622878745684
+      ],
+      "wins": 61,
+      "ties": 29,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "Xeger",
+      "metric": "code_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.3185436274292763,
+      "median_delta_points": 0.3683241252302023,
+      "ci95_mean_delta_points": [
+        0.25691902830254204,
+        0.39447462585054777
+      ],
+      "wins": 61,
+      "ties": 29,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "Xeger",
+      "metric": "branch_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.47005314914671625,
+      "median_delta_points": 0.4464285714285714,
+      "ci95_mean_delta_points": [
+        0.32868629908103586,
+        0.6973172620102441
+      ],
+      "wins": 61,
+      "ties": 29,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "EGRET",
+      "metric": "code_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.03011458439745294,
+      "median_delta_points": 0.0,
+      "ci95_mean_delta_points": [
+        0.0,
+        0.09034375319235881
+      ],
+      "wins": 1,
+      "ties": 89,
+      "losses": 0,
+      "p_value": 1.0,
+      "p_value_holm": 1.0,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "EGRET",
+      "metric": "branch_coverage",
+      "paired_observations": 90,
+      "mean_delta_points": 0.10194537972315748,
+      "median_delta_points": 0.0,
+      "ci95_mean_delta_points": [
+        0.0,
+        0.30583613916947244
+      ],
+      "wins": 1,
+      "ties": 89,
+      "losses": 0,
+      "p_value": 1.0,
+      "p_value_holm": 1.0,
+      "test": "two_sided_sign_flip_permutation"
+    }
+  ],
+  "notes": {
+    "comparison_chart": "Two-panel grouped bar chart: top for code coverage, bottom for branch coverage.",
+    "generator_regexes": "Some Django targets use simplified practical regexes for generation because the full validator regex is too complex for the graph generator.",
+    "statistics": "Paired two-sided sign-flip permutation tests compare RegexInstantiator against each other tool by run_index and target."
+  }
+}

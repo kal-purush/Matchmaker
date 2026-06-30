@@ -1,0 +1,1821 @@
+{
+  "n_positive": 1000,
+  "n_negative": 1000,
+  "runs": 30,
+  "seed": 0,
+  "generator_validate": true,
+  "positive_mode": "diverse",
+  "negative_mode": "compact_graph",
+  "tools": [
+    [
+      "RegexInstantiator",
+      "ours"
+    ],
+    [
+      "exrex",
+      "exrex"
+    ],
+    [
+      "Xeger",
+      "xeger"
+    ],
+    [
+      "EGRET",
+      "egret"
+    ]
+  ],
+  "targets": [
+    {
+      "name": "email_stdlib_parseaddr",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "note": "Practical email regex for generation; validated by stdlib email.utils.parseaddr(strict=True)."
+    },
+    {
+      "name": "email_django_core",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "note": "Practical email regex for generation; validated by Django validate_email."
+    },
+    {
+      "name": "email_validator_package",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "note": "Practical email regex for generation; validated by email_validator.validate_email(check_deliverability=False)."
+    },
+    {
+      "name": "ip_stdlib_ipaddress",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "note": "Practical IPv4-or-IPv6 regex for generation; validated by stdlib ipaddress.ip_address."
+    },
+    {
+      "name": "ip_django_core",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "note": "Practical IPv4-or-IPv6 regex for generation; validated by Django validate_ipv46_address."
+    },
+    {
+      "name": "ip_pydantic",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "note": "Practical IPv4-or-IPv6 regex for generation; validated by pydantic IPvAnyAddress."
+    },
+    {
+      "name": "url_stdlib_urllib",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "note": "Simplified URL regex for generation; validated by urllib.parse.urlsplit with scheme/netloc checks."
+    },
+    {
+      "name": "url_django_core",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "note": "Simplified URL regex for generation; validated by Django URLValidator."
+    },
+    {
+      "name": "url_pydantic",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "note": "Simplified URL regex for generation; validated by pydantic HttpUrl."
+    },
+    {
+      "name": "datetime_stdlib_strptime",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "note": "ISO datetime regex for generation; validated by datetime.datetime.strptime('%Y-%m-%dT%H:%M:%S')."
+    },
+    {
+      "name": "datetime_django_utils",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "note": "ISO datetime regex for generation; validated by Django django.utils.dateparse.parse_datetime."
+    },
+    {
+      "name": "datetime_dateutil",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "note": "ISO datetime regex for generation; validated by dateutil.parser.isoparse."
+    },
+    {
+      "name": "uuid_stdlib",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "note": "Canonical UUID regex for generation; validated by stdlib uuid.UUID."
+    },
+    {
+      "name": "uuid_django_model",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "note": "Canonical UUID regex for generation; validated by Django UUIDField.to_python."
+    },
+    {
+      "name": "uuid_pydantic",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "note": "Canonical UUID regex for generation; validated by pydantic TypeAdapter(uuid.UUID)."
+    },
+    {
+      "name": "domain_stdlib_idna",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "note": "Simplified domain regex for generation; validated by stdlib IDNA encode/decode checks."
+    },
+    {
+      "name": "domain_django_core",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "note": "Simplified domain regex for generation; validated by Django validate_domain_name."
+    },
+    {
+      "name": "domain_pydantic",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "note": "Simplified domain regex for generation; validated by pydantic HttpUrl using http://{sample}."
+    }
+  ],
+  "results": [
+    {
+      "target": "datetime_dateutil",
+      "tool": "RegexInstantiator",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 979,
+      "rejected": 1021,
+      "code_coverage": 0.5255474452554745,
+      "branch_coverage": 0.5444444444444444,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 52.55474452554745,
+        "mean_branch_coverage": 0.5444444444444444
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_dateutil",
+      "tool": "EGRET",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 9,
+      "negatives": 9,
+      "total_samples": 18,
+      "accepted": 10,
+      "rejected": 8,
+      "code_coverage": 0.3576642335766423,
+      "branch_coverage": 0.35555555555555557,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 35.76642335766423,
+        "mean_branch_coverage": 0.35555555555555557
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_dateutil",
+      "tool": "Xeger",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 924,
+      "rejected": 76,
+      "code_coverage": 0.2883211678832117,
+      "branch_coverage": 0.2777777777777778,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.83211678832117,
+        "mean_branch_coverage": 0.2777777777777778
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_dateutil",
+      "tool": "exrex",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.2883211678832117,
+      "branch_coverage": 0.2777777777777778,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.83211678832117,
+        "mean_branch_coverage": 0.2777777777777778
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_django_utils",
+      "tool": "RegexInstantiator",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 983,
+      "rejected": 1017,
+      "code_coverage": 0.2328767123287671,
+      "branch_coverage": 0.2777777777777778,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 23.28767123287671,
+        "mean_branch_coverage": 0.2777777777777778
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_django_utils",
+      "tool": "EGRET",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 9,
+      "negatives": 9,
+      "total_samples": 18,
+      "accepted": 9,
+      "rejected": 9,
+      "code_coverage": 0.2054794520547945,
+      "branch_coverage": 0.2222222222222222,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 20.54794520547945,
+        "mean_branch_coverage": 0.2222222222222222
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_django_utils",
+      "tool": "Xeger",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 924,
+      "rejected": 76,
+      "code_coverage": 0.1917808219178082,
+      "branch_coverage": 0.16666666666666666,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 19.178082191780824,
+        "mean_branch_coverage": 0.16666666666666666
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_django_utils",
+      "tool": "exrex",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.0273972602739726,
+      "branch_coverage": 0.0,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.73972602739726,
+        "mean_branch_coverage": 0.0
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_stdlib_strptime",
+      "tool": "RegexInstantiator",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 964,
+      "rejected": 1036,
+      "code_coverage": 0.16759906759906762,
+      "branch_coverage": 0.18469387755102043,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 16.759906759906762,
+        "mean_branch_coverage": 0.18469387755102043
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_stdlib_strptime",
+      "tool": "EGRET",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 9,
+      "negatives": 9,
+      "total_samples": 18,
+      "accepted": 9,
+      "rejected": 9,
+      "code_coverage": 0.1625874125874126,
+      "branch_coverage": 0.17857142857142858,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 16.25874125874126,
+        "mean_branch_coverage": 0.17857142857142858
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_stdlib_strptime",
+      "tool": "Xeger",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 926,
+      "rejected": 74,
+      "code_coverage": 0.1590909090909091,
+      "branch_coverage": 0.17346938775510204,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 15.909090909090908,
+        "mean_branch_coverage": 0.17346938775510204
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "datetime_stdlib_strptime",
+      "tool": "exrex",
+      "regex": "(?:19|20)\\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.1590909090909091,
+      "branch_coverage": 0.17346938775510204,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 15.909090909090908,
+        "mean_branch_coverage": 0.17346938775510204
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_django_core",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 160,
+      "rejected": 1840,
+      "code_coverage": 0.031476997578692496,
+      "branch_coverage": 0.05434782608695652,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 3.1476997578692494,
+        "mean_branch_coverage": 0.05434782608695652
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_django_core",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 3,
+      "rejected": 997,
+      "code_coverage": 0.03139628732849072,
+      "branch_coverage": 0.05398550724637681,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 3.1396287328490717,
+        "mean_branch_coverage": 0.05398550724637681
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_django_core",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 702,
+      "rejected": 298,
+      "code_coverage": 0.026634382566585953,
+      "branch_coverage": 0.043478260869565216,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.663438256658595,
+        "mean_branch_coverage": 0.043478260869565216
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_django_core",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 19,
+      "negatives": 3,
+      "total_samples": 22,
+      "accepted": 0,
+      "rejected": 22,
+      "code_coverage": 0.024213075060532687,
+      "branch_coverage": 0.03260869565217391,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.4213075060532687,
+        "mean_branch_coverage": 0.03260869565217391
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_pydantic",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 19,
+      "negatives": 3,
+      "total_samples": 22,
+      "accepted": 19,
+      "rejected": 3,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_pydantic",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1429,
+      "rejected": 571,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_pydantic",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 858,
+      "rejected": 142,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_pydantic",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_stdlib_idna",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1740,
+      "rejected": 260,
+      "code_coverage": 0.1050411522633745,
+      "branch_coverage": 0.1320754716981132,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.50411522633745,
+        "mean_branch_coverage": 0.1320754716981132
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_stdlib_idna",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 19,
+      "negatives": 3,
+      "total_samples": 22,
+      "accepted": 19,
+      "rejected": 3,
+      "code_coverage": 0.09876543209876543,
+      "branch_coverage": 0.12264150943396226,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 9.876543209876543,
+        "mean_branch_coverage": 0.12264150943396226
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_stdlib_idna",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 216,
+      "rejected": 784,
+      "code_coverage": 0.08950617283950617,
+      "branch_coverage": 0.11320754716981132,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 8.950617283950617,
+        "mean_branch_coverage": 0.11320754716981132
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "domain_stdlib_idna",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.08950617283950617,
+      "branch_coverage": 0.11320754716981132,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 8.950617283950617,
+        "mean_branch_coverage": 0.11320754716981132
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_django_core",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 451,
+      "rejected": 1549,
+      "code_coverage": 0.05084745762711864,
+      "branch_coverage": 0.09782608695652174,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 5.084745762711864,
+        "mean_branch_coverage": 0.09782608695652174
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_django_core",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 70,
+      "negatives": 14,
+      "total_samples": 84,
+      "accepted": 4,
+      "rejected": 80,
+      "code_coverage": 0.04600484261501211,
+      "branch_coverage": 0.08695652173913043,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.600484261501211,
+        "mean_branch_coverage": 0.08695652173913043
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_django_core",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 937,
+      "rejected": 63,
+      "code_coverage": 0.041162227602905575,
+      "branch_coverage": 0.07608695652173912,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.116222760290558,
+        "mean_branch_coverage": 0.07608695652173912
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_django_core",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 16,
+      "rejected": 984,
+      "code_coverage": 0.03470540758676352,
+      "branch_coverage": 0.06521739130434782,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 3.4705407586763517,
+        "mean_branch_coverage": 0.06521739130434782
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_stdlib_parseaddr",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 70,
+      "negatives": 14,
+      "total_samples": 84,
+      "accepted": 80,
+      "rejected": 4,
+      "code_coverage": 0.14958448753462603,
+      "branch_coverage": 0.1810344827586207,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 14.958448753462603,
+        "mean_branch_coverage": 0.1810344827586207
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_stdlib_parseaddr",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1375,
+      "rejected": 625,
+      "code_coverage": 0.14958448753462603,
+      "branch_coverage": 0.1810344827586207,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 14.958448753462603,
+        "mean_branch_coverage": 0.1810344827586207
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_stdlib_parseaddr",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.14404432132963987,
+      "branch_coverage": 0.1724137931034483,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 14.404432132963988,
+        "mean_branch_coverage": 0.1724137931034483
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_stdlib_parseaddr",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.14404432132963987,
+      "branch_coverage": 0.1724137931034483,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 14.404432132963988,
+        "mean_branch_coverage": 0.1724137931034483
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_validator_package",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 389,
+      "rejected": 1611,
+      "code_coverage": 0.4586074561403509,
+      "branch_coverage": 0.44895833333333335,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 45.86074561403509,
+        "mean_branch_coverage": 0.44895833333333335
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_validator_package",
+      "tool": "Xeger",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 5,
+      "rejected": 995,
+      "code_coverage": 0.3952850877192982,
+      "branch_coverage": 0.369047619047619,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 39.52850877192983,
+        "mean_branch_coverage": 0.369047619047619
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_validator_package",
+      "tool": "EGRET",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 70,
+      "negatives": 14,
+      "total_samples": 84,
+      "accepted": 0,
+      "rejected": 84,
+      "code_coverage": 0.37664473684210525,
+      "branch_coverage": 0.36607142857142855,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 37.66447368421053,
+        "mean_branch_coverage": 0.36607142857142855
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "email_validator_package",
+      "tool": "exrex",
+      "regex": "(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 937,
+      "rejected": 63,
+      "code_coverage": 0.36184210526315785,
+      "branch_coverage": 0.3392857142857143,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 36.18421052631579,
+        "mean_branch_coverage": 0.3392857142857143
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_django_core",
+      "tool": "EGRET",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 24,
+      "negatives": 18,
+      "total_samples": 42,
+      "accepted": 24,
+      "rejected": 18,
+      "code_coverage": 0.036319612590799036,
+      "branch_coverage": 0.021739130434782608,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 3.6319612590799033,
+        "mean_branch_coverage": 0.021739130434782608
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_django_core",
+      "tool": "RegexInstantiator",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1006,
+      "rejected": 994,
+      "code_coverage": 0.036319612590799036,
+      "branch_coverage": 0.021739130434782608,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 3.6319612590799033,
+        "mean_branch_coverage": 0.021739130434782608
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_django_core",
+      "tool": "Xeger",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.026634382566585953,
+      "branch_coverage": 0.010869565217391304,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.663438256658595,
+        "mean_branch_coverage": 0.010869565217391304
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_django_core",
+      "tool": "exrex",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.009685230024213076,
+      "branch_coverage": 0.0,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 0.9685230024213076,
+        "mean_branch_coverage": 0.0
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_pydantic",
+      "tool": "RegexInstantiator",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1006,
+      "rejected": 994,
+      "code_coverage": 0.11128882674047592,
+      "branch_coverage": 0.12067523459812321,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.128882674047592,
+        "mean_branch_coverage": 0.12067523459812321
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_pydantic",
+      "tool": "EGRET",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 24,
+      "negatives": 18,
+      "total_samples": 42,
+      "accepted": 24,
+      "rejected": 18,
+      "code_coverage": 0.11057692307692309,
+      "branch_coverage": 0.11842105263157894,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.057692307692308,
+        "mean_branch_coverage": 0.11842105263157894
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_pydantic",
+      "tool": "Xeger",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.10737179487179488,
+      "branch_coverage": 0.11842105263157894,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.737179487179487,
+        "mean_branch_coverage": 0.11842105263157894
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_pydantic",
+      "tool": "exrex",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.10096153846153846,
+      "branch_coverage": 0.11842105263157894,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.096153846153845,
+        "mean_branch_coverage": 0.11842105263157894
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_stdlib_ipaddress",
+      "tool": "RegexInstantiator",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1006,
+      "rejected": 994,
+      "code_coverage": 0.12509252405625462,
+      "branch_coverage": 0.16666666666666666,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 12.509252405625462,
+        "mean_branch_coverage": 0.16666666666666666
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_stdlib_ipaddress",
+      "tool": "EGRET",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 24,
+      "negatives": 18,
+      "total_samples": 42,
+      "accepted": 24,
+      "rejected": 18,
+      "code_coverage": 0.09400444115470022,
+      "branch_coverage": 0.11988304093567251,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 9.400444115470021,
+        "mean_branch_coverage": 0.11988304093567251
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_stdlib_ipaddress",
+      "tool": "Xeger",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.07031828275351591,
+      "branch_coverage": 0.0935672514619883,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 7.031828275351591,
+        "mean_branch_coverage": 0.0935672514619883
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "ip_stdlib_ipaddress",
+      "tool": "exrex",
+      "regex": "(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\.(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.02146558105107328,
+      "branch_coverage": 0.029239766081871343,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.1465581051073275,
+        "mean_branch_coverage": 0.029239766081871343
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_django_core",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 451,
+      "rejected": 1549,
+      "code_coverage": 0.10734463276836156,
+      "branch_coverage": 0.1920289855072464,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.734463276836156,
+        "mean_branch_coverage": 0.1920289855072464
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_django_core",
+      "tool": "Xeger",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 186,
+      "rejected": 814,
+      "code_coverage": 0.09443099273607748,
+      "branch_coverage": 0.16304347826086957,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 9.443099273607746,
+        "mean_branch_coverage": 0.16304347826086957
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_django_core",
+      "tool": "EGRET",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 58,
+      "negatives": 10,
+      "total_samples": 68,
+      "accepted": 4,
+      "rejected": 64,
+      "code_coverage": 0.08958837772397095,
+      "branch_coverage": 0.15217391304347824,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 8.958837772397095,
+        "mean_branch_coverage": 0.15217391304347824
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_django_core",
+      "tool": "exrex",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.08474576271186442,
+      "branch_coverage": 0.14130434782608695,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 8.474576271186441,
+        "mean_branch_coverage": 0.14130434782608695
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_pydantic",
+      "tool": "EGRET",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 58,
+      "negatives": 10,
+      "total_samples": 68,
+      "accepted": 57,
+      "rejected": 11,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_pydantic",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 753,
+      "rejected": 1247,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_pydantic",
+      "tool": "Xeger",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 290,
+      "rejected": 710,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_pydantic",
+      "tool": "exrex",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.11217948717948717,
+      "branch_coverage": 0.14473684210526316,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.217948717948717,
+        "mean_branch_coverage": 0.14473684210526316
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_stdlib_urllib",
+      "tool": "RegexInstantiator",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1150,
+      "rejected": 850,
+      "code_coverage": 0.11484848484848484,
+      "branch_coverage": 0.13578811369509045,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 11.484848484848483,
+        "mean_branch_coverage": 0.13578811369509045
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_stdlib_urllib",
+      "tool": "EGRET",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 58,
+      "negatives": 10,
+      "total_samples": 68,
+      "accepted": 66,
+      "rejected": 2,
+      "code_coverage": 0.10113636363636364,
+      "branch_coverage": 0.12015503875968993,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.113636363636365,
+        "mean_branch_coverage": 0.12015503875968993
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_stdlib_urllib",
+      "tool": "Xeger",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 965,
+      "rejected": 35,
+      "code_coverage": 0.10113636363636364,
+      "branch_coverage": 0.12015503875968993,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 10.113636363636365,
+        "mean_branch_coverage": 0.12015503875968993
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "url_stdlib_urllib",
+      "tool": "exrex",
+      "regex": "(?i)(?:http|https|ftp|ftps)://(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z-]{2,63}|xn--[a-z0-9]{1,59})(?::[0-9]{1,5})?(?:/[a-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]*)?",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.09090909090909091,
+      "branch_coverage": 0.10077519379844961,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 9.090909090909092,
+        "mean_branch_coverage": 0.10077519379844961
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "EGRET",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 11,
+      "negatives": 20,
+      "total_samples": 31,
+      "accepted": 11,
+      "rejected": 20,
+      "code_coverage": 0.024848150193263394,
+      "branch_coverage": 0.008928571428571428,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.4848150193263394,
+        "mean_branch_coverage": 0.008928571428571428
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "RegexInstantiator",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1012,
+      "rejected": 988,
+      "code_coverage": 0.024848150193263394,
+      "branch_coverage": 0.008928571428571428,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 2.4848150193263394,
+        "mean_branch_coverage": 0.008928571428571428
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "Xeger",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.019878520154610713,
+      "branch_coverage": 0.004464285714285714,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 1.9878520154610713,
+        "mean_branch_coverage": 0.004464285714285714
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_django_model",
+      "tool": "exrex",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.019878520154610713,
+      "branch_coverage": 0.004464285714285714,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 1.9878520154610713,
+        "mean_branch_coverage": 0.004464285714285714
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "EGRET",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 11,
+      "negatives": 20,
+      "total_samples": 31,
+      "accepted": 11,
+      "rejected": 20,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "RegexInstantiator",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1000,
+      "rejected": 1000,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "Xeger",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_pydantic",
+      "tool": "exrex",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.28365384615384615,
+      "branch_coverage": 0.20454545454545456,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 28.365384615384617,
+        "mean_branch_coverage": 0.20454545454545456
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "EGRET",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 11,
+      "negatives": 20,
+      "total_samples": 31,
+      "accepted": 11,
+      "rejected": 20,
+      "code_coverage": 0.04604051565377532,
+      "branch_coverage": 0.06578947368421052,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.6040515653775325,
+        "mean_branch_coverage": 0.06578947368421052
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "RegexInstantiator",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 1000,
+      "total_samples": 2000,
+      "accepted": 1012,
+      "rejected": 988,
+      "code_coverage": 0.04604051565377532,
+      "branch_coverage": 0.06578947368421052,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.6040515653775325,
+        "mean_branch_coverage": 0.06578947368421052
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "Xeger",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.0423572744014733,
+      "branch_coverage": 0.05921052631578947,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.23572744014733,
+        "mean_branch_coverage": 0.05921052631578947
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "target": "uuid_stdlib",
+      "tool": "exrex",
+      "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+      "positives": 1000,
+      "negatives": 0,
+      "total_samples": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "code_coverage": 0.0423572744014733,
+      "branch_coverage": 0.05921052631578947,
+      "coverage_summary": {
+        "runs": 30,
+        "mean_percent_covered": 4.23572744014733,
+        "mean_branch_coverage": 0.05921052631578947
+      },
+      "run_index": -1,
+      "seed": 0,
+      "status": "aggregate",
+      "error_type": null,
+      "error_message": null
+    }
+  ],
+  "raw_results_jsonl": "/Users/masudhasan/Music/regex_testing/regex_positive_generator/benchmarks/coverage_outputs/clean_30_results.jsonl",
+  "statistical_tests": [
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "exrex",
+      "metric": "code_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 4.3297887700840745,
+      "median_delta_points": 0.9685230024213065,
+      "ci95_mean_delta_points": [
+        3.7486472505905346,
+        4.938864416610943
+      ],
+      "wins": 450,
+      "ties": 90,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "exrex",
+      "metric": "branch_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 5.464665926501439,
+      "median_delta_points": 1.8867924528301883,
+      "ci95_mean_delta_points": [
+        4.755058832498785,
+        6.191952466538346
+      ],
+      "wins": 421,
+      "ties": 119,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "Xeger",
+      "metric": "code_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 2.728365202015761,
+      "median_delta_points": 0.6993006993007006,
+      "ci95_mean_delta_points": [
+        2.2980905680192882,
+        3.2082533581211434
+      ],
+      "wins": 421,
+      "ties": 119,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "Xeger",
+      "metric": "branch_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 3.729208823270757,
+      "median_delta_points": 1.0869565217391304,
+      "ci95_mean_delta_points": [
+        3.1952709454388453,
+        4.286701215773913
+      ],
+      "wins": 392,
+      "ties": 148,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "EGRET",
+      "metric": "code_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 2.0216970376622214,
+      "median_delta_points": 0.48426150121065326,
+      "ci95_mean_delta_points": [
+        1.69269936778515,
+        2.3710174079791377
+      ],
+      "wins": 301,
+      "ties": 239,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    },
+    {
+      "baseline": "RegexInstantiator",
+      "comparison": "EGRET",
+      "metric": "branch_coverage",
+      "paired_observations": 540,
+      "mean_delta_points": 2.6667911733276273,
+      "median_delta_points": 0.9433962264150941,
+      "ci95_mean_delta_points": [
+        2.288105958344906,
+        3.0703824086109988
+      ],
+      "wins": 301,
+      "ties": 239,
+      "losses": 0,
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "test": "two_sided_sign_flip_permutation"
+    }
+  ],
+  "notes": {
+    "comparison_chart": "Two-panel grouped bar chart: top for code coverage, bottom for branch coverage.",
+    "generator_regexes": "Some Django targets use simplified practical regexes for generation because the full validator regex is too complex for the graph generator.",
+    "statistics": "Paired two-sided sign-flip permutation tests compare RegexInstantiator against each other tool by run_index and target."
+  }
+}
