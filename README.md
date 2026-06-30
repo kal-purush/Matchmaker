@@ -60,6 +60,16 @@ python3 -m venv .venv
 .venv/bin/python -m pip install regex
 ```
 
+To prepare the complete individual and combined coverage-benchmark environment,
+including Python dependencies, RandExp.js, Java generators, MutRex, and EGRET,
+run:
+
+```bash
+./setup_coverage_benchmarks.sh
+```
+
+The script installs the pinned Python dependencies from `requirement.txt`.
+
 The repository currently has no package metadata for installation, so run the
 examples from the repository root or add that directory to `PYTHONPATH`.
 
