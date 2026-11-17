@@ -2,8 +2,8 @@ import re
 import signal
 import time
 
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.negative_choices import (
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.negative_choices import (
     ViolationChoiceHelper,
     is_ascii_word_class,
     is_ascii_word_or_space_class,
@@ -11,15 +11,15 @@ from regex_positive_generator.experimental.negative_choices import (
     looks_like_broad_printable_class,
     printable_exclusions,
 )
-from regex_positive_generator.experimental.negative_context import iter_node_contexts
-from regex_positive_generator.experimental.negative_families import (
+from matchmaker.compact.negative_context import iter_node_contexts
+from matchmaker.compact.negative_families import (
     family_candidates,
     minimal_local_faults,
     optimized_family_fill_candidates,
     representative_valid,
     select_violation_families,
 )
-from regex_positive_generator.parser import DEFAULT_REGEX_TIMEOUT_SECONDS, REGEX_AVAILABLE
+from matchmaker.parser import DEFAULT_REGEX_TIMEOUT_SECONDS, REGEX_AVAILABLE
 
 try:
     import regex

@@ -1,12 +1,12 @@
 import random
 import re
 
-from regex_positive_generator.experimental.counting import (
+from matchmaker.compact.counting import (
     saturating_add,
     saturating_mul,
     saturating_pow,
 )
-from regex_positive_generator.parser import REGEX_AVAILABLE
+from matchmaker.parser import REGEX_AVAILABLE
 
 try:
     import regex

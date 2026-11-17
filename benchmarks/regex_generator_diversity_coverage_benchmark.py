@@ -10,7 +10,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Callable, Dict, List, Optional, Tuple
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -23,8 +23,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from email_validator_tool_coverage import SEED, require
-from regex_positive_generator.benchmarks.python_regex_function_coverage_benchmark import (
+from benchmarks.email_validator_tool_coverage import SEED, require
+from benchmarks.python_regex_function_coverage_benchmark import (
     TOOL_SPECS,
     build_tool_error_message,
     build_target_specs as build_all_target_specs,
@@ -56,8 +56,8 @@ except ImportError:  # pragma: no cover - optional benchmark target
 
 DEFAULT_SAMPLE_SIZES = "10,50,100,500,1000,10000,1000000"
 DEFAULT_TARGET = "email_validator_package"
-DEFAULT_RESULTS_JSONL = "regex_positive_generator/benchmarks/coverage_outputs/regex_generator_diversity_coverage_results.jsonl"
-DEFAULT_SUMMARY_JSON = "regex_positive_generator/benchmarks/coverage_outputs/regex_generator_diversity_coverage_summary.json"
+DEFAULT_RESULTS_JSONL = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "regex_generator_diversity_coverage_results.jsonl")
+DEFAULT_SUMMARY_JSON = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "regex_generator_diversity_coverage_summary.json")
 DEFAULT_RESULTS_JSON = "regex_generator_diversity_coverage_results.json"
 DEFAULT_COVERAGE_ROOT = "regex_generator_diversity_coverage_reports"
 DEFAULT_CHART_PATH = "regex_generator_diversity_coverage_curve.png"

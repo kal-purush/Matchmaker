@@ -15,13 +15,13 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.lookaround_sampler import (
+    LookaroundCompactGraphSampler,
 )
 
 try:
@@ -35,7 +35,10 @@ except ImportError:  # pragma: no cover - optional benchmark dependency
     Xeger = None
 
 
-DEFAULT_PATTERNS_PATHS = ["exponential-regexes.json", "polynomial-regexes.json"]
+DEFAULT_PATTERNS_PATHS = [
+    str(REPO_ROOT / "data" / "exponential-regexes.json"),
+    str(REPO_ROOT / "data" / "polynomial-regexes.json"),
+]
 DEFAULT_RESULTS_JSONL = "regex_generation_speed_benchmark_results.jsonl"
 DEFAULT_SUMMARY_JSON = "regex_generation_speed_benchmark_summary.json"
 DEFAULT_NUM_PATTERNS = 5000
@@ -247,8 +250,7 @@ def dedupe_count(samples: List[str]) -> int:
 
 def locate_egret_runner() -> str:
     candidates = [
-        os.path.abspath("egret/egret.py"),
-        os.path.abspath("egret.worktrees/copilot-worktree-2026-05-13T10-31-47/egret.py"),
+        str(REPO_ROOT / "egret" / "egret.py"),
     ]
     for candidate in candidates:
         candidate_dir = os.path.dirname(candidate)
@@ -262,7 +264,10 @@ def locate_egret_runner() -> str:
         )
         if os.path.exists(candidate) and has_extension:
             return candidate
-    raise RuntimeError("EGRET runner with compiled egret_ext module not found in workspace.")
+    raise RuntimeError(
+        "EGRET runner with compiled egret_ext module not found in egret/. "
+        "Build it with ./setup_coverage_benchmarks.sh."
+    )
 
 
 def parse_egret_matches(stdout: str) -> List[str]:
@@ -315,7 +320,7 @@ def generate_with_tool(
             )
 
         generation_started = time.perf_counter()
-        samples = ExperimentalLookaroundCompactGraphSampler(builder, validate=validate).generate_samples(
+        samples = LookaroundCompactGraphSampler(builder, validate=validate).generate_samples(
             n=samples_per_pattern,
             seed=seed,
             on_sample=on_sample,
@@ -865,7 +870,7 @@ def main() -> None:
         "--patterns-path",
         nargs="+",
         default=DEFAULT_PATTERNS_PATHS,
-        help="One or more JSON/JSONL corpus files. Defaults to exponential-regexes.json and polynomial-regexes.json.",
+        help="One or more JSON/JSONL corpus files. Defaults to data/exponential-regexes.json and data/polynomial-regexes.json.",
     )
     parser.add_argument(
         "--selected-patterns-jsonl",

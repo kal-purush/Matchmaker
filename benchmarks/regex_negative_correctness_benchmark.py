@@ -6,12 +6,12 @@ import time
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator import generate_negative_samples
-from regex_positive_generator.benchmarks.regex_correctness_benchmark import (
+from matchmaker import generate_negative_samples
+from benchmarks.regex_correctness_benchmark import (
     BenchmarkTimeoutError,
     BenchmarkWorkerError,
     DEFAULT_CORPUS_PATHS,

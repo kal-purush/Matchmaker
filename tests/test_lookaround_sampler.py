@@ -1,16 +1,16 @@
 import re
 import unittest
 
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.lookaround_sampler import (
+    LookaroundCompactGraphSampler,
 )
 
 
-class ExperimentalLookaroundSamplerTests(unittest.TestCase):
+class LookaroundSamplerTests(unittest.TestCase):
     def generate(self, pattern, n=100, seed=0):
         builder = CompactRegexGraphBuilder(pattern)
-        return ExperimentalLookaroundCompactGraphSampler(builder, validate=False).generate_samples(n=n, seed=seed)
+        return LookaroundCompactGraphSampler(builder, validate=False).generate_samples(n=n, seed=seed)
 
     def test_negative_prefix_lookahead_avoids_forbidden_prefixes(self):
         pattern = r"^(?!\d[1]{2}|[5]{3})([2-9]\d{2})([. -]*)\d{4}$"
@@ -66,7 +66,7 @@ class ExperimentalLookaroundSamplerTests(unittest.TestCase):
     def test_reports_unsupported_complex_lookaround(self):
         pattern = r"(?!.*([abcde]).*\1)^[abcde]{5}$"
         builder = CompactRegexGraphBuilder(pattern)
-        sampler = ExperimentalLookaroundCompactGraphSampler(builder, validate=False)
+        sampler = LookaroundCompactGraphSampler(builder, validate=False)
 
         self.assertIn("negative_lookahead", sampler.lookaround_report()["unsupported_lookarounds"])
 

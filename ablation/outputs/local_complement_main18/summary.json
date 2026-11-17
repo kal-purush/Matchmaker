@@ -1,0 +1,534 @@
+{
+  "baseline": "full",
+  "config": {
+    "n_negative": 1000,
+    "n_positive": 1000,
+    "regex_set": "validator",
+    "runs": 10,
+    "seed": 0,
+    "stats_iterations": 10000,
+    "study": "local_complement",
+    "target_set": "benchmark",
+    "targets": [
+      "datetime_dateutil",
+      "datetime_django_utils",
+      "datetime_stdlib_strptime",
+      "domain_django_core",
+      "domain_pydantic",
+      "domain_stdlib_idna",
+      "email_django_core",
+      "email_stdlib_parseaddr",
+      "email_validator_package",
+      "ip_django_core",
+      "ip_pydantic",
+      "ip_stdlib_ipaddress",
+      "url_django_core",
+      "url_pydantic",
+      "url_stdlib_urllib",
+      "uuid_django_model",
+      "uuid_pydantic",
+      "uuid_stdlib"
+    ],
+    "variants": [
+      "full",
+      "local_fill",
+      "local_and_families",
+      "local_only"
+    ],
+    "workers": 8
+  },
+  "error_rows": [],
+  "negative_tag_counts": {
+    "full": {
+      "alternation_violation": 180,
+      "basic_boundary_violation": 896,
+      "case_sensitivity_violation": 40,
+      "character_class_violation": 9510,
+      "empty_seed": 180,
+      "escape_sequence_violation": 4404,
+      "group_violation": 13220,
+      "minimal_local_fault": 54440,
+      "numeric_boundary_violation": 8650,
+      "optimized_family_fill": 66620,
+      "quantifier_overflow_violation": 1800,
+      "quantifier_underflow_violation": 2950,
+      "separator_boundary_violation": 6320,
+      "stress_boundary_violation": 610,
+      "structure_violation": 530,
+      "unicode_violation": 210,
+      "whitespace_boundary_violation": 1050,
+      "wrong_char_substitution": 8390
+    },
+    "local_and_families": {
+      "alternation_violation": 180,
+      "basic_boundary_violation": 894,
+      "case_sensitivity_violation": 40,
+      "character_class_violation": 9510,
+      "empty_seed": 180,
+      "escape_sequence_violation": 4406,
+      "group_violation": 13220,
+      "minimal_local_fault": 54440,
+      "numeric_boundary_violation": 8650,
+      "quantifier_overflow_violation": 1800,
+      "quantifier_underflow_violation": 2950,
+      "separator_boundary_violation": 6320,
+      "stress_boundary_violation": 610,
+      "structure_violation": 530,
+      "unicode_violation": 210,
+      "whitespace_boundary_violation": 1050,
+      "wrong_char_substitution": 8390
+    },
+    "local_fill": {
+      "empty_seed": 180,
+      "minimal_local_fault": 54440,
+      "optimized_family_fill": 125380
+    },
+    "local_only": {
+      "empty_seed": 180,
+      "minimal_local_fault": 54440
+    }
+  },
+  "overall_mean_over_targets": {
+    "full": {
+      "branch_coverage": 22.165175476492685,
+      "code_coverage": 17.57520025743328
+    },
+    "local_and_families": {
+      "branch_coverage": 22.11276457502518,
+      "code_coverage": 17.524231857841027
+    },
+    "local_fill": {
+      "branch_coverage": 21.763247246093826,
+      "code_coverage": 17.356720838666426
+    },
+    "local_only": {
+      "branch_coverage": 20.81963845911138,
+      "code_coverage": 16.701542359689295
+    }
+  },
+  "paired_tests": [
+    {
+      "bootstrap_95_ci": [
+        0.18247199776647652,
+        0.2559192177958044
+      ],
+      "mean_delta_points": 0.21847941876684857,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 5,
+        "tied": 13,
+        "worse": 0
+      },
+      "variant": "local_fill"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.3403736781945806,
+        0.4658856168828874
+      ],
+      "mean_delta_points": 0.4019282303988634,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 5,
+        "tied": 13,
+        "worse": 0
+      },
+      "variant": "local_fill"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.03567787971457699,
+        0.06625891946992869
+      ],
+      "mean_delta_points": 0.05096839959225284,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 1,
+        "tied": 17,
+        "worse": 0
+      },
+      "variant": "local_and_families"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.03668763102725368,
+        0.06944444444444446
+      ],
+      "mean_delta_points": 0.05241090146750525,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 1,
+        "tied": 17,
+        "worse": 0
+      },
+      "variant": "local_and_families"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.7813896897869314,
+        0.9639871745682955
+      ],
+      "mean_delta_points": 0.8736578977439842,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 8,
+        "tied": 10,
+        "worse": 0
+      },
+      "variant": "local_only"
+    },
+    {
+      "bootstrap_95_ci": [
+        1.2041859781863378,
+        1.4894084633035434
+      ],
+      "mean_delta_points": 1.3455370173813057,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.0005999400059994001,
+      "target_counts": {
+        "better": 8,
+        "tied": 10,
+        "worse": 0
+      },
+      "variant": "local_only"
+    }
+  ],
+  "per_target": {
+    "datetime_dateutil": {
+      "full": {
+        "branch_coverage": 72.77777777777777,
+        "code_coverage": 66.57608695652175
+      },
+      "local_and_families": {
+        "branch_coverage": 72.77777777777777,
+        "code_coverage": 66.57608695652175
+      },
+      "local_fill": {
+        "branch_coverage": 70.55555555555556,
+        "code_coverage": 65.48913043478261
+      },
+      "local_only": {
+        "branch_coverage": 68.88888888888889,
+        "code_coverage": 63.04347826086956
+      }
+    },
+    "datetime_django_utils": {
+      "full": {
+        "branch_coverage": 42.22222222222223,
+        "code_coverage": 30.18181818181818
+      },
+      "local_and_families": {
+        "branch_coverage": 42.22222222222223,
+        "code_coverage": 30.18181818181818
+      },
+      "local_fill": {
+        "branch_coverage": 42.22222222222223,
+        "code_coverage": 30.18181818181818
+      },
+      "local_only": {
+        "branch_coverage": 42.22222222222223,
+        "code_coverage": 30.18181818181818
+      }
+    },
+    "datetime_stdlib_strptime": {
+      "full": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      },
+      "local_and_families": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      },
+      "local_fill": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      },
+      "local_only": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      }
+    },
+    "domain_django_core": {
+      "full": {
+        "branch_coverage": 5.434782608695653,
+        "code_coverage": 2.4922118380062304
+      },
+      "local_and_families": {
+        "branch_coverage": 5.434782608695653,
+        "code_coverage": 2.4922118380062304
+      },
+      "local_fill": {
+        "branch_coverage": 5.326086956521739,
+        "code_coverage": 2.4610591900311527
+      },
+      "local_only": {
+        "branch_coverage": 5.326086956521739,
+        "code_coverage": 2.4610591900311527
+      }
+    },
+    "domain_pydantic": {
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_and_families": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_fill": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_only": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      }
+    },
+    "domain_stdlib_idna": {
+      "full": {
+        "branch_coverage": 13.20754716981132,
+        "code_coverage": 9.63302752293578
+      },
+      "local_and_families": {
+        "branch_coverage": 12.264150943396228,
+        "code_coverage": 8.715596330275229
+      },
+      "local_fill": {
+        "branch_coverage": 13.20754716981132,
+        "code_coverage": 9.63302752293578
+      },
+      "local_only": {
+        "branch_coverage": 11.320754716981131,
+        "code_coverage": 8.256880733944953
+      }
+    },
+    "email_django_core": {
+      "full": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      },
+      "local_and_families": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      },
+      "local_fill": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      },
+      "local_only": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      }
+    },
+    "email_stdlib_parseaddr": {
+      "full": {
+        "branch_coverage": 33.70689655172414,
+        "code_coverage": 22.89795918367347
+      },
+      "local_and_families": {
+        "branch_coverage": 33.70689655172414,
+        "code_coverage": 22.89795918367347
+      },
+      "local_fill": {
+        "branch_coverage": 33.70689655172414,
+        "code_coverage": 22.89795918367347
+      },
+      "local_only": {
+        "branch_coverage": 27.068965517241377,
+        "code_coverage": 19.38775510204082
+      }
+    },
+    "email_validator_package": {
+      "full": {
+        "branch_coverage": 49.642857142857146,
+        "code_coverage": 50.989583333333336
+      },
+      "local_and_families": {
+        "branch_coverage": 49.642857142857146,
+        "code_coverage": 50.989583333333336
+      },
+      "local_fill": {
+        "branch_coverage": 48.74999999999999,
+        "code_coverage": 50.46875
+      },
+      "local_only": {
+        "branch_coverage": 45.17857142857143,
+        "code_coverage": 48.125
+      }
+    },
+    "ip_django_core": {
+      "full": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      },
+      "local_and_families": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      },
+      "local_fill": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      },
+      "local_only": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      }
+    },
+    "ip_pydantic": {
+      "full": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      },
+      "local_and_families": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      },
+      "local_fill": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      },
+      "local_only": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      }
+    },
+    "ip_stdlib_ipaddress": {
+      "full": {
+        "branch_coverage": 19.29824561403509,
+        "code_coverage": 12.388503468780971
+      },
+      "local_and_families": {
+        "branch_coverage": 19.29824561403509,
+        "code_coverage": 12.388503468780971
+      },
+      "local_fill": {
+        "branch_coverage": 16.374269005847957,
+        "code_coverage": 10.406342913776015
+      },
+      "local_only": {
+        "branch_coverage": 15.789473684210526,
+        "code_coverage": 10.20812685827552
+      }
+    },
+    "url_django_core": {
+      "full": {
+        "branch_coverage": 19.34782608695652,
+        "code_coverage": 8.34890965732087
+      },
+      "local_and_families": {
+        "branch_coverage": 19.34782608695652,
+        "code_coverage": 8.34890965732087
+      },
+      "local_fill": {
+        "branch_coverage": 18.260869565217387,
+        "code_coverage": 8.037383177570092
+      },
+      "local_only": {
+        "branch_coverage": 17.17391304347826,
+        "code_coverage": 7.7258566978193155
+      }
+    },
+    "url_pydantic": {
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_and_families": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_fill": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_only": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      }
+    },
+    "url_stdlib_urllib": {
+      "full": {
+        "branch_coverage": 15.11627906976744,
+        "code_coverage": 11.2540192926045
+      },
+      "local_and_families": {
+        "branch_coverage": 15.11627906976744,
+        "code_coverage": 11.2540192926045
+      },
+      "local_fill": {
+        "branch_coverage": 15.11627906976744,
+        "code_coverage": 11.2540192926045
+      },
+      "local_only": {
+        "branch_coverage": 13.565891472868216,
+        "code_coverage": 9.646302250803858
+      }
+    },
+    "uuid_django_model": {
+      "full": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      },
+      "local_and_families": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      },
+      "local_fill": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      },
+      "local_only": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      }
+    },
+    "uuid_pydantic": {
+      "full": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      },
+      "local_and_families": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      },
+      "local_fill": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      },
+      "local_only": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      }
+    },
+    "uuid_stdlib": {
+      "full": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      },
+      "local_and_families": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      },
+      "local_fill": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      },
+      "local_only": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      }
+    }
+  },
+  "superset_invariant_violations": []
+}

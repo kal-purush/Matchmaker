@@ -4,9 +4,9 @@ import unicodedata
 import unittest
 import warnings
 
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.counting import MAX_COMPACT_COUNT
-from regex_positive_generator.parser import RegexParseError
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.counting import MAX_COMPACT_COUNT
+from matchmaker.parser import RegexParseError
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)

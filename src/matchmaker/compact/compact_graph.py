@@ -2,15 +2,15 @@ import string
 from dataclasses import dataclass, field
 import re
 
-from regex_positive_generator.charset import representative_chars, stable_seed
-from regex_positive_generator.experimental.counting import (
+from matchmaker.charset import representative_chars, stable_seed
+from matchmaker.compact.counting import (
     saturating_add,
     saturating_mul,
     saturating_pow,
     validate_compact_repeat_bounds,
 )
-from regex_positive_generator.parser import MAX_RECURSION_DEPTH, RegexParser
-from regex_positive_generator.repeats import effective_repeat_bounds
+from matchmaker.parser import MAX_RECURSION_DEPTH, RegexParser
+from matchmaker.repeats import effective_repeat_bounds
 
 
 @dataclass
@@ -308,7 +308,7 @@ class CompactRegexGraphBuilder(RegexParser):
         return total
 
     def generate_samples(self, n=1000, seed=0, validate=True, on_sample=None):
-        from regex_positive_generator.experimental.compact_sampler import CompactGraphSampler
+        from matchmaker.compact.compact_sampler import CompactGraphSampler
 
         return CompactGraphSampler(self, validate=validate).generate_samples(n=n, seed=seed, on_sample=on_sample)
 

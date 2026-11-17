@@ -2,12 +2,12 @@ import argparse
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator import RegexGraphBuilder
-from regex_positive_generator.visualization import write_dot, write_png
+from matchmaker import RegexGraphBuilder
+from matchmaker.visualization import write_dot, write_png
 
 
 def main():

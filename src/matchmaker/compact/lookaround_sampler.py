@@ -1,6 +1,6 @@
 import random
 
-from regex_positive_generator.experimental.compact_sampler import (
+from matchmaker.compact.compact_sampler import (
     CompactGraphSampler,
     MAX_RANDOM_ATTEMPTS,
     MAX_RANDOM_ATTEMPTS_WITH_REQUIRED_VALIDATION,
@@ -12,7 +12,7 @@ MAX_PREFIX_ALTERNATIVES = 128
 MAX_CLASS_PREFIX_EXPANSION = 16
 
 
-class ExperimentalLookaroundCompactGraphSampler(CompactGraphSampler):
+class LookaroundCompactGraphSampler(CompactGraphSampler):
     """Opt-in compact sampler with targeted constructive lookaround handling.
 
     This intentionally leaves the production CompactGraphSampler untouched. It
@@ -39,7 +39,7 @@ class ExperimentalLookaroundCompactGraphSampler(CompactGraphSampler):
             seen = set()
             results = []
             simplified = self.builder.build_simplified_graph(seed=seed)
-            simplified_sampler = ExperimentalLookaroundCompactGraphSampler(simplified, validate=self.validate)
+            simplified_sampler = LookaroundCompactGraphSampler(simplified, validate=self.validate)
             simplified_sampler._inherit_lookaround_constraints(self)
             results.extend(
                 simplified_sampler._generate_direct(
@@ -306,3 +306,7 @@ class ExperimentalLookaroundCompactGraphSampler(CompactGraphSampler):
         if constraint["negative"]:
             return (None, memory) if matches else ("", memory)
         return ("", memory) if matches else (None, memory)
+
+
+# Former name, kept so existing scripts keep working.
+ExperimentalLookaroundCompactGraphSampler = LookaroundCompactGraphSampler

@@ -1,7 +1,13 @@
 import json
 import os
+import sys
 from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Callable, Dict, List
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 MPL_CONFIG_DIR = os.path.abspath(".matplotlib-cache")
 os.makedirs(MPL_CONFIG_DIR, exist_ok=True)
@@ -14,17 +20,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from email_validator_tool_coverage import (
+from benchmarks.email_validator_tool_coverage import (
     EMAIL_REGEX,
     SEED,
     SampleCase,
     configure_django_for_standalone_use,
     require,
 )
-from regex_positive_generator import generate_negative_samples
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
+from matchmaker import generate_negative_samples
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.lookaround_sampler import (
+    LookaroundCompactGraphSampler,
 )
 
 try:
@@ -77,7 +83,7 @@ class SampleExample:
 
 def generate_ours_samples(pattern: str, n_pos: int, n_neg: int, seed: int) -> List[SampleCase]:
     builder = CompactRegexGraphBuilder(pattern, validate=True)
-    positives = ExperimentalLookaroundCompactGraphSampler(builder, validate=True).generate_samples(
+    positives = LookaroundCompactGraphSampler(builder, validate=True).generate_samples(
         n=n_pos,
         seed=seed,
     )
@@ -339,7 +345,7 @@ def main() -> None:
                 "seed": SEED,
                 "n_positive": N_POSITIVE,
                 "n_negative": N_NEGATIVE,
-                "positive_sampler": "ExperimentalLookaroundCompactGraphSampler",
+                "positive_sampler": "LookaroundCompactGraphSampler",
                 "generator_timeout_seconds": GENERATOR_TIMEOUT_SECONDS,
                 "total_samples": len(frame),
                 "validators": validator_names,

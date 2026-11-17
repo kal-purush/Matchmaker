@@ -1,0 +1,380 @@
+{
+  "baseline": "full",
+  "config": {
+    "n_negative": 1000,
+    "n_positive": 1000,
+    "regex_set": "benchmark",
+    "runs": 30,
+    "seed": 0,
+    "stats_iterations": 10000,
+    "study": "boundary_positive",
+    "target_set": "benchmark",
+    "targets": [
+      "datetime_dateutil",
+      "datetime_django_utils",
+      "datetime_stdlib_strptime",
+      "domain_django_core",
+      "domain_pydantic",
+      "domain_stdlib_idna",
+      "email_django_core",
+      "email_stdlib_parseaddr",
+      "email_validator_package",
+      "ip_django_core",
+      "ip_pydantic",
+      "ip_stdlib_ipaddress",
+      "url_django_core",
+      "url_pydantic",
+      "url_stdlib_urllib",
+      "uuid_django_model",
+      "uuid_pydantic",
+      "uuid_stdlib"
+    ],
+    "variants": [
+      "full",
+      "enum_pos",
+      "no_pos"
+    ],
+    "workers": 8
+  },
+  "error_rows": [],
+  "negative_tag_counts": {
+    "enum_pos": {},
+    "full": {},
+    "no_pos": {}
+  },
+  "overall_mean_over_targets": {
+    "enum_pos": {
+      "branch_coverage": 18.81218993162095,
+      "code_coverage": 15.282019107530964
+    },
+    "full": {
+      "branch_coverage": 18.973940807213665,
+      "code_coverage": 15.393450192267872
+    },
+    "no_pos": {
+      "branch_coverage": 18.51025756447119,
+      "code_coverage": 15.21279100091968
+    }
+  },
+  "paired_tests": [
+    {
+      "bootstrap_95_ci": [
+        0.0912183179078817,
+        0.13309934604972384
+      ],
+      "mean_delta_points": 0.11143108473690919,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 3,
+        "tied": 15,
+        "worse": 0
+      },
+      "variant": "enum_pos"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.14397511366953009,
+        0.18001552683575775
+      ],
+      "mean_delta_points": 0.16175087559271922,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 4,
+        "tied": 14,
+        "worse": 0
+      },
+      "variant": "enum_pos"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.15771362067847602,
+        0.20523172974054554
+      ],
+      "mean_delta_points": 0.18065919134819333,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 4,
+        "tied": 14,
+        "worse": 0
+      },
+      "variant": "no_pos"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.4135857732381295,
+        0.5147468902489403
+      ],
+      "mean_delta_points": 0.4636832427424774,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 5,
+        "tied": 13,
+        "worse": 0
+      },
+      "variant": "no_pos"
+    }
+  ],
+  "per_target": {
+    "datetime_dateutil": {
+      "enum_pos": {
+        "branch_coverage": 54.44444444444442,
+        "code_coverage": 51.63043478260871
+      },
+      "full": {
+        "branch_coverage": 54.44444444444442,
+        "code_coverage": 51.63043478260871
+      },
+      "no_pos": {
+        "branch_coverage": 54.44444444444442,
+        "code_coverage": 51.63043478260871
+      }
+    },
+    "datetime_django_utils": {
+      "enum_pos": {
+        "branch_coverage": 27.77777777777779,
+        "code_coverage": 21.818181818181827
+      },
+      "full": {
+        "branch_coverage": 27.77777777777779,
+        "code_coverage": 21.818181818181827
+      },
+      "no_pos": {
+        "branch_coverage": 27.77777777777779,
+        "code_coverage": 21.818181818181827
+      }
+    },
+    "datetime_stdlib_strptime": {
+      "enum_pos": {
+        "branch_coverage": 18.695652173913043,
+        "code_coverage": 18.66359447004608
+      },
+      "full": {
+        "branch_coverage": 18.695652173913043,
+        "code_coverage": 18.66359447004608
+      },
+      "no_pos": {
+        "branch_coverage": 18.695652173913043,
+        "code_coverage": 18.66359447004608
+      }
+    },
+    "domain_django_core": {
+      "enum_pos": {
+        "branch_coverage": 4.347826086956521,
+        "code_coverage": 2.4922118380062295
+      },
+      "full": {
+        "branch_coverage": 5.434782608695653,
+        "code_coverage": 2.4922118380062295
+      },
+      "no_pos": {
+        "branch_coverage": 4.347826086956521,
+        "code_coverage": 2.4922118380062295
+      }
+    },
+    "domain_pydantic": {
+      "enum_pos": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      },
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      },
+      "no_pos": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      }
+    },
+    "domain_stdlib_idna": {
+      "enum_pos": {
+        "branch_coverage": 13.207547169811324,
+        "code_coverage": 9.63302752293578
+      },
+      "full": {
+        "branch_coverage": 13.207547169811324,
+        "code_coverage": 9.63302752293578
+      },
+      "no_pos": {
+        "branch_coverage": 13.207547169811324,
+        "code_coverage": 9.63302752293578
+      }
+    },
+    "email_django_core": {
+      "enum_pos": {
+        "branch_coverage": 9.782608695652177,
+        "code_coverage": 3.738317757009345
+      },
+      "full": {
+        "branch_coverage": 9.782608695652177,
+        "code_coverage": 3.738317757009345
+      },
+      "no_pos": {
+        "branch_coverage": 7.608695652173912,
+        "code_coverage": 3.4267912772585682
+      }
+    },
+    "email_stdlib_parseaddr": {
+      "enum_pos": {
+        "branch_coverage": 18.103448275862075,
+        "code_coverage": 13.469387755102042
+      },
+      "full": {
+        "branch_coverage": 18.103448275862075,
+        "code_coverage": 13.469387755102042
+      },
+      "no_pos": {
+        "branch_coverage": 18.103448275862075,
+        "code_coverage": 13.469387755102042
+      }
+    },
+    "email_validator_package": {
+      "enum_pos": {
+        "branch_coverage": 44.19642857142859,
+        "code_coverage": 44.79166666666668
+      },
+      "full": {
+        "branch_coverage": 44.89583333333334,
+        "code_coverage": 46.423611111111114
+      },
+      "no_pos": {
+        "branch_coverage": 44.19642857142859,
+        "code_coverage": 44.79166666666668
+      }
+    },
+    "ip_django_core": {
+      "enum_pos": {
+        "branch_coverage": 2.1739130434782603,
+        "code_coverage": 4.049844236760125
+      },
+      "full": {
+        "branch_coverage": 2.1739130434782603,
+        "code_coverage": 4.049844236760125
+      },
+      "no_pos": {
+        "branch_coverage": 2.1739130434782603,
+        "code_coverage": 4.049844236760125
+      }
+    },
+    "ip_pydantic": {
+      "enum_pos": {
+        "branch_coverage": 18.60465116279069,
+        "code_coverage": 12.392426850258175
+      },
+      "full": {
+        "branch_coverage": 18.60465116279069,
+        "code_coverage": 12.392426850258175
+      },
+      "no_pos": {
+        "branch_coverage": 18.60465116279069,
+        "code_coverage": 12.392426850258175
+      }
+    },
+    "ip_stdlib_ipaddress": {
+      "enum_pos": {
+        "branch_coverage": 16.666666666666668,
+        "code_coverage": 11.100099108027747
+      },
+      "full": {
+        "branch_coverage": 16.666666666666668,
+        "code_coverage": 11.100099108027747
+      },
+      "no_pos": {
+        "branch_coverage": 16.666666666666668,
+        "code_coverage": 11.100099108027747
+      }
+    },
+    "url_django_core": {
+      "enum_pos": {
+        "branch_coverage": 18.47826086956521,
+        "code_coverage": 8.09968847352025
+      },
+      "full": {
+        "branch_coverage": 19.202898550724637,
+        "code_coverage": 8.307372793354102
+      },
+      "no_pos": {
+        "branch_coverage": 15.217391304347824,
+        "code_coverage": 7.165109034267913
+      }
+    },
+    "url_pydantic": {
+      "enum_pos": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      },
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      },
+      "no_pos": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.22030981067126
+      }
+    },
+    "url_stdlib_urllib": {
+      "enum_pos": {
+        "branch_coverage": 13.178294573643416,
+        "code_coverage": 10.450160771704182
+      },
+      "full": {
+        "branch_coverage": 13.578811369509042,
+        "code_coverage": 10.616291532690243
+      },
+      "no_pos": {
+        "branch_coverage": 13.178294573643416,
+        "code_coverage": 10.450160771704182
+      }
+    },
+    "uuid_django_model": {
+      "enum_pos": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.008070432868673
+      },
+      "full": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.008070432868673
+      },
+      "no_pos": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.008070432868673
+      }
+    },
+    "uuid_pydantic": {
+      "enum_pos": {
+        "branch_coverage": 29.629629629629637,
+        "code_coverage": 31.472081218274106
+      },
+      "full": {
+        "branch_coverage": 29.629629629629637,
+        "code_coverage": 31.472081218274106
+      },
+      "no_pos": {
+        "branch_coverage": 29.629629629629637,
+        "code_coverage": 31.472081218274106
+      }
+    },
+    "uuid_stdlib": {
+      "enum_pos": {
+        "branch_coverage": 6.57894736842105,
+        "code_coverage": 3.826530612244897
+      },
+      "full": {
+        "branch_coverage": 6.57894736842105,
+        "code_coverage": 3.826530612244897
+      },
+      "no_pos": {
+        "branch_coverage": 6.57894736842105,
+        "code_coverage": 3.826530612244897
+      }
+    }
+  },
+  "superset_invariant_violations": []
+}

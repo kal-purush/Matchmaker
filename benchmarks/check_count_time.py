@@ -3,14 +3,14 @@ import time
 from collections import Counter
 from pathlib import Path
 
-from regex_positive_generator import RegexGraphBuilder
-from regex_positive_generator.benchmarks.check_graph_build_time import (
+from matchmaker import RegexGraphBuilder
+from benchmarks.check_graph_build_time import (
     DEFAULT_GRAPH_OUTPUT_DIR,
     DEFAULT_PATHS,
     extract_patterns,
     safe_stem,
 )
-from regex_positive_generator.visualization import write_png
+from matchmaker.visualization import write_png
 
 
 def measure_path(path, limit, *, seed=0, png_output_dir=None, png_limit=0):
@@ -98,7 +98,7 @@ def measure_path(path, limit, *, seed=0, png_output_dir=None, png_limit=0):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Measure regex_positive_generator count and simplified graph time.")
+    parser = argparse.ArgumentParser(description="Measure matchmaker count and simplified graph time.")
     parser.add_argument("paths", nargs="*", default=DEFAULT_PATHS)
     parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=0)

@@ -1,0 +1,173 @@
+\subsection{Ablation Study}
+\label{sec:ablation}
+
+Matchmaker builds its test inputs from three components. \emph{Boundary-positive
+generation} produces strings that the regex accepts, chosen to cover the minimum
+and maximum repeat counts, the first and last characters of each class, and every
+alternation branch (\S\ref{sec:positive}). Negative generation then runs in two
+steps. \emph{Local complements} (step~1) take one representative accepted string
+and, at each literal, character class, or backreference position, replace the
+character with one that the regex rejects at that position, giving one single-fault
+string per position. \emph{Context-aware mutations} (step~2) apply violation
+families selected from the regex's structure (wrong-character substitution,
+character-class, separator, numeric, quantifier, group, and escape violations,
+among others) to the same representative string, cycling through the families
+round-robin. If steps~1 and~2 together yield fewer than $N$ distinct rejected
+strings, a fallback fill tops the set up to $N$. To measure what each component
+contributes, we remove or replace one component at a time and compare the
+coverage of the remaining configuration with that of the full system.
+
+\paragraph{Variants.}
+We compare the full system with four variants (Table~\ref{tab:ablation}).
+\begin{itemize}
+  \item \textbf{Full}: boundary positives, followed by steps~1 and~2 and the
+    fallback fill for negatives.
+  \item \textbf{Shortest-first enumeration}: the boundary positives are replaced by
+    the first $N$ distinct accepted strings in length order (shortest first; within
+    one length, alternation branches from left to right and class characters in
+    code-point order). This baseline is systematic but takes no account of
+    boundaries. Negatives are the same as in Full.
+  \item \textbf{No positives}: positives are removed, and negatives are the same as
+    in Full. This variant shows how much of the coverage the negatives reach alone.
+  \item \textbf{Local complements only}: boundary positives, with local complements as the only
+    negatives. There are no mutations and no fallback fill.
+  \item \textbf{Mutations only}: boundary positives, with context-aware mutations as the
+    only negatives. There is no fallback fill, and any string that step~1 would
+    produce is removed.
+\end{itemize}
+Neither step variant includes the fallback fill. The fill always tops the
+negative set up to $N$ strings, so it would hide part of the step that was
+removed. Mutations only removes step~1's strings because several mutation families
+(wrong-character substitution, character-class violation, and case sensitivity
+among them) produce exactly the one-character replacements that step~1 makes.
+Without this exclusion, Mutations only would still contain most of the local
+complements, and the comparison would not separate the two steps.
+
+\paragraph{Setup.}
+We use the 18 validator targets and the regexes of the main benchmark
+(\S\ref{sec:benchmark}), with $N = 1000$ positives and $N = 1000$ negatives. Each
+configuration runs 10 times with seeds $0$--$9$, and each run is paired with the
+Full run that has the same target and seed. Shortest-first enumeration
+is deterministic, so its positive set is the same in every run. For every run we
+pass all positives and negatives to the target validator and measure line and
+branch coverage of the validator's code with \texttt{coverage.py}, using the same
+harness as in \S\ref{sec:rq-coverage}. For each target we report
+$\Delta = \text{variant} - \text{Full}$ in percentage points, averaged over the 10
+runs, so a negative $\Delta$ means that coverage is lost without the removed or
+replaced component. Across targets we report the mean $\Delta$, a 95\% bootstrap confidence
+interval over the 18 targets (10{,}000 resamples), and the number of targets where
+Full is better, tied, or worse. A difference below $0.005$ points counts as a tie.
+We bootstrap over targets rather than over the 180 target--run pairs, because runs
+of the same target are strongly correlated.
+
+\input{ablation_table.tex}
+
+\paragraph{Results: boundary positives.}
+Removing the positives lowers coverage by $0.18$ line and $0.47$ branch points on
+average (95\% CI $[-1.01, -0.07]$ for branches). Full is better on 5 of the 18
+targets and never worse. The losses are concentrated where the success path of the
+validator contains real logic: \texttt{url\_django\_core} ($-4.13$ branch),
+\texttt{email\_django\_core} ($-2.17$), \texttt{domain\_django\_core} ($-1.09$),
+\texttt{email\_validator\_package} ($-0.67$), and \texttt{url\_stdlib\_urllib}
+($-0.43$). Replacing the boundary positives with shortest-first enumeration recovers
+part of this loss but not all of it ($\Delta = -0.11$ line, $-0.17$ branch; better on 4
+targets, never worse). The remaining gap is largest on
+\texttt{email\_validator\_package} ($-1.59$ line), where shortest-first enumeration reaches
+no more coverage than having no positives at all. All 1000 of its strings have six
+characters and the form \texttt{!@0.}$xy$ or \texttt{!@1.}$xy$, so it never reaches
+multi-character local parts, dotted local parts, multi-label domains, long labels,
+or the \texttt{xn--} branch. Boundary positives reach these by design.
+
+The averages are small because, with the benchmark regexes, the negatives already
+do much of the positives' work. Each benchmark regex is a practical approximation
+of what its validator accepts, and most validators accept more than the regex
+does (for example, \texttt{uuid.UUID} ignores hyphens and \texttt{ipaddress}
+accepts compressed IPv6). Many strings that the regex rejects are therefore
+accepted by the validator and exercise its success path. To isolate the
+positives, we repeated this comparison with regexes written to match each
+validator's actual acceptance rule (14 of the 18 targets; the other four keep the
+benchmark regex). With these regexes, removing positives gives $\Delta = -3.02$ line and
+$-4.62$ branch points, and replacing them with shortest-first enumeration gives
+$-2.02$ and $-2.85$.
+
+\paragraph{Results: local complements and context-aware mutations.}
+The two negative steps contribute very differently. With local complements alone
+(about 30 negatives per target), coverage falls by $1.43$ line and $2.05$ branch
+points (95\% CI $[-4.35, -0.53]$), and Full is better on 8 of the 18 targets. The
+largest losses are on parsers whose rejection logic branches on the shape of the
+input: \texttt{datetime\_dateutil} ($-17.78$ branch), \texttt{ip\_stdlib\_ipaddress}
+and \texttt{datetime\_django\_utils} ($-5.56$ each), \texttt{email\_validator\_package}
+($-3.12$), and \texttt{url\_django\_core} ($-2.17$). A single wrong character
+reaches the first rejection check of these validators, but not the checks behind
+it, such as a wrong number of fields, an out-of-range component, or a misplaced
+separator. Context-aware mutations reach these checks. On the other 10 targets,
+step~1 alone already matches Full.
+
+Without step~1's strings, context-aware mutations alone (about 202 negatives per
+target) come within $0.11$ line and $0.12$ branch points of Full and are tied on
+15 of the 18 targets. The remaining gaps are on \texttt{domain\_stdlib\_idna}
+($-0.94$ branch), \texttt{email\_validator\_package} ($-0.89$), and
+\texttt{ip\_stdlib\_ipaddress} ($-0.29$). These gaps cannot be attributed to step~1
+alone, because Full also includes the fallback fill, which the step variants do
+not. On \texttt{domain\_stdlib\_idna} the gap comes from strings that only the
+fallback fill produces.
+
+\paragraph{Why most $\Delta$ are zero.}
+Coverage changes only when an input reaches a line that no other input reaches.
+Most validators reject malformed input at one or two checks, so negatives with
+very different faults end at the same line, and removing the component that
+produced one of them changes nothing. Three of the targets with all-zero rows
+show this (line numbers are for Python~3.13 and Django~6.0).
+\begin{itemize}
+  \item \texttt{uuid\_stdlib}. \texttt{uuid.UUID} removes hyphens, checks the
+    length, and then parses the rest as hex. The local complement
+    \texttt{00000000:0000-0000-0000-000000000000} (a colon instead of the first
+    hyphen) and the whitespace mutation
+    \texttt{\textvisiblespace 00000000-0000-0000-0000-000000000000} are different
+    faults, but both leave 33 characters and stop at the same
+    \texttt{raise ValueError('badly formed hexadecimal UUID string')}
+    (\texttt{uuid.py}, line~181). A wrong character such as
+    \texttt{!0000000-\ldots} fails one line later, in \texttt{int(hex, 16)}. These two
+    lines catch all 37 local complements and 191 of the 203 mutations. The other
+    12 mutations, such as \texttt{0000000-0000-0000-0000-0000000000000} with its
+    hyphens in the wrong places, are accepted, because \texttt{uuid.UUID} ignores
+    hyphens. They therefore follow the success path, which the positives already
+    cover.
+  \item \texttt{datetime\_stdlib\_strptime}. \texttt{strptime} compiles the whole
+    format into one regex and reports every mismatch with the same error. The
+    local complement \texttt{a900-01-01T00:00:00} (a letter for the first digit),
+    the structure mutation \texttt{00:00:00T10-10-0091} (the string reversed), and
+    the whitespace mutation \texttt{\textvisiblespace 1900-01-01T00:00:00} execute
+    exactly the same lines and stop at
+    \texttt{raise ValueError("time data \%r does not match format \%r")}
+    (\texttt{\_strptime.py}, line~555). 26 of the 28 local complements and 201 of
+    the 219 mutations end there.
+  \item \texttt{ip\_django\_core}. \texttt{validate\_ipv46\_address} tries IPv4,
+    then IPv6, and raises one error if both fail. The local complement
+    \texttt{a.0.0.0}, the structure mutation \texttt{.0.0.00}, the numeric mutation
+    \texttt{-1}, and the whitespace mutation \texttt{\textvisiblespace 0.0.0.0}
+    execute identical lines and end at the same \texttt{raise ValidationError}
+    (\texttt{validators.py}, line~331). All 59 local complements and 415 of the 421
+    mutations take this path. The remaining six, compressed IPv6 addresses such as
+    \texttt{0::0:0:0:0:0:0}, are accepted by Django and reach no line that Full's
+    other inputs miss.
+\end{itemize}
+In each case the validator does not distinguish the faults, so once one
+component has reached the rejecting line, the others add nothing that coverage
+can measure.
+
+Taken together, context-aware mutations reach almost all of the negative-side
+coverage, and local complements add little once mutations are present. Local
+complements are still useful as a cheap first step, because about 30 strings per
+target reach Full's coverage on 10 of the 18 targets. The boundary positives
+contribute most on validators whose success path has real logic, and the
+contribution grows when the regex matches the validator closely.
+
+\paragraph{Limitations.}
+The two step variants use fewer negatives than Full (about 30 and 202 against 1000),
+because we removed the fallback fill to keep the steps separate. Their $\Delta$
+values therefore combine the effect of the missing step with the effect of a
+smaller test set. Coverage is also a coarse measure here. As the examples above
+show, negatives with different faults count the same once one of them has reached
+the rejecting line, so an ablation based on coverage understates differences
+between components that fail at the same check.

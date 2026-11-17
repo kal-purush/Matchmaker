@@ -1,0 +1,31 @@
+\begin{table*}
+\centering
+\caption{Ablation on 18 validation targets (mean of 10 runs). $\Delta$ is the variant
+minus Full in percentage points; negative means coverage is lost without the component. Only
+targets with a non-zero $\Delta$ are listed; means are over all 18.}
+\label{tab:ablation}
+% \scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.05}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l rr rr rr rr rr}
+\toprule
+ & \multicolumn{2}{c}{Full} & \multicolumn{2}{c}{$\Delta$ Shortest-first enum.} & \multicolumn{2}{c}{$\Delta$ No positives} & \multicolumn{2}{c}{$\Delta$ Local complements only} & \multicolumn{2}{c}{$\Delta$ Mutations only} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}
+Target & Line & Branch & Line & Branch & Line & Branch & Line & Branch & Line & Branch \\
+\midrule
+datetime\_dateutil & 51.63 & 54.44 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & $-$15.22 & $-$17.78 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+datetime\_django\_utils & 21.82 & 27.78 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & $-$1.82 & $-$5.56 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+domain\_django\_core & 2.49 & 5.43 & \phantom{$-$}0.00 & $-$1.09 & \phantom{$-$}0.00 & $-$1.09 & $-$0.03 & $-$0.11 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+domain\_stdlib\_idna & 9.63 & 13.21 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & $-$1.38 & $-$1.89 & $-$0.92 & $-$0.94 \\
+email\_django\_core & 3.74 & 9.78 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & $-$0.31 & $-$2.17 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+email\_validator\_package & 46.38 & 44.87 & $-$1.59 & $-$0.67 & $-$1.59 & $-$0.67 & $-$2.08 & $-$3.12 & $-$0.78 & $-$0.89 \\
+ip\_stdlib\_ipaddress & 11.10 & 16.67 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & \phantom{$-$}0.00 & $-$3.27 & $-$5.56 & $-$0.20 & $-$0.29 \\
+url\_django\_core & 8.35 & 19.35 & $-$0.25 & $-$0.87 & $-$1.18 & $-$4.13 & $-$0.62 & $-$2.17 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+url\_stdlib\_urllib & 10.63 & 13.60 & $-$0.18 & $-$0.43 & $-$0.18 & $-$0.43 & $-$1.29 & $-$0.78 & \phantom{$-$}0.00 & \phantom{$-$}0.00 \\
+\midrule
+Mean (18 targets) & 15.39 & 18.98 & $-$0.11 & $-$0.17 & $-$0.18 & $-$0.47 & $-$1.43 & $-$2.05 & $-$0.11 & $-$0.12 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

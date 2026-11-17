@@ -1,7 +1,7 @@
 import unittest
 import warnings
 
-from regex_positive_generator import RegexGraphBuilder
+from matchmaker import RegexGraphBuilder
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)

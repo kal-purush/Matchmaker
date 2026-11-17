@@ -43,35 +43,39 @@ suffixes, capture state, and repetition context. It first constructs localized
 violations and then draws from supplemental mutation families. Final regex
 validation is the global rejection check.
 
-## Requirements
+## Installation
 
-- Python 3.13 is the tested artifact environment.
-- The third-party [`regex`](https://pypi.org/project/regex/) package is optional
-  but recommended for the intended parsing, validation, and timeout behavior.
+Matchmaker requires Python 3.13 or newer. Its only runtime dependency is the
+[`regex`](https://pypi.org/project/regex/) package, which provides the intended
+parsing, recursion, validation, and timeout behavior.
 
-All other generator dependencies are from the Python standard library. Java,
-Node.js, and external regex generators are needed only by comparison
-benchmarks, not by Matchmaker itself.
-
-From the repository root:
+Install the library directly from a clone of this repository:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install regex
+pip install .
+# or, with uv
+uv pip install .
 ```
 
-To prepare the complete individual and combined coverage-benchmark environment,
-including Python dependencies, RandExp.js, Java generators, MutRex, and EGRET,
-run:
+For development, install it in editable mode with the test dependencies:
 
 ```bash
-./setup_coverage_benchmarks.sh
+uv venv --python 3.13
+uv pip install -e ".[dev]"
+uv run pytest
 ```
 
-The script installs the pinned Python dependencies from `requirement.txt`.
+Optional extras:
 
-The repository currently has no package metadata for installation, so run the
-examples from the repository root or add that directory to `PYTHONPATH`.
+| Extra        | Contents                                                        |
+|--------------|-----------------------------------------------------------------|
+| `viz`        | `graphviz`, for rendering graphs as PNG (also needs `dot`)      |
+| `benchmarks` | Exact versions of all Python packages used by the evaluation    |
+| `dev`        | `pytest`                                                        |
+
+Java, Node.js, and the external regex generators are needed only by the
+comparison benchmarks, not by Matchmaker itself; see
+[Reproducing the Evaluation](#reproducing-the-evaluation).
 
 ## Quick Start
 
@@ -81,14 +85,11 @@ The ICSE evaluation uses the compact graph and the constructive lookaround
 sampler:
 
 ```python
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
-)
+from matchmaker.compact import CompactRegexGraphBuilder, LookaroundCompactGraphSampler
 
 pattern = r"([A-Z]{2})\d{3}\1"
 builder = CompactRegexGraphBuilder(pattern, validate=True)
-sampler = ExperimentalLookaroundCompactGraphSampler(builder, validate=True)
+sampler = LookaroundCompactGraphSampler(builder, validate=True)
 
 positives = sampler.generate_samples(n=20, seed=0)
 for sample in positives:
@@ -99,7 +100,7 @@ For the baseline compact sampler without targeted constructive lookaround
 handling:
 
 ```python
-from regex_positive_generator.experimental import (
+from matchmaker.compact import (
     CompactGraphSampler,
     CompactRegexGraphBuilder,
 )
@@ -115,7 +116,7 @@ positives = CompactGraphSampler(builder, validate=True).generate_samples(
 baseline compact sampler:
 
 ```python
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
+from matchmaker.compact import CompactRegexGraphBuilder
 
 positives = CompactRegexGraphBuilder(r"[a-z]{2}\d").generate_samples(
     n=20,
@@ -127,7 +128,7 @@ positives = CompactRegexGraphBuilder(r"[a-z]{2}\d").generate_samples(
 ### Negative inputs
 
 ```python
-from regex_positive_generator import generate_negative_samples
+from matchmaker import generate_negative_samples
 
 negatives = generate_negative_samples(
     r"[A-Z]{2}\d",
@@ -183,7 +184,7 @@ CompactGraphSampler(builder, validate=True).generate_samples(
 - `seed` controls representative values and random index selection.
 - `on_sample`, when supplied, is called once for each retained sample.
 
-### `ExperimentalLookaroundCompactGraphSampler`
+### `LookaroundCompactGraphSampler`
 
 This is the positive sampler used by the current coverage evaluation. It adds
 targeted constructive handling for:
@@ -194,6 +195,10 @@ targeted constructive handling for:
 
 Unsupported lookaround shapes are reported by `lookaround_report()` and rely
 on final validation rather than constructive satisfaction.
+
+This class was previously named `ExperimentalLookaroundCompactGraphSampler`;
+that name remains available as an alias. In benchmark command lines and saved
+results, this sampler is still identified as `lookaround-experimental`.
 
 ### `generate_negative_samples`
 
@@ -220,8 +225,10 @@ generate_negative_samples(
 
 ## Validation Engines
 
-When installed, the `regex` package is preferred for parsing and final
-validation. Otherwise Matchmaker falls back to Python's standard `re` module.
+The `regex` package is used for parsing and final validation. If it is
+unavailable (for example, when running from source without installing),
+Matchmaker falls back to Python's standard `re` module, which does not support
+constructs such as recursion.
 Validation uses `fullmatch` by default.
 
 Validation is important because a local mutation can still match through an
@@ -289,7 +296,7 @@ timeouts, or validation-heavy patterns.
 The package also exports:
 
 ```python
-from regex_positive_generator import generate_positive_samples
+from matchmaker import generate_positive_samples
 ```
 
 This convenience function currently uses the older flat `RegexGraphBuilder`
@@ -297,45 +304,92 @@ implementation. It is retained for compatibility, but it is not the compact
 positive sampler used for the reported ICSE evaluation. Use the compact APIs
 shown above when reproducing the paper results.
 
-## Source Layout
+## Repository Layout
 
 ```text
-regex_positive_generator/
-  parser.py                         parsing and syntax normalization
-  charset.py                        reproducible character representatives
-  repeats.py                        effective unbounded-repeat policy
-  negative.py                       public negative-generation export
-  experimental/
-    compact_graph.py                compact hierarchical graph
-    compact_sampler.py              indexed positive sampler
-    compact_sampler_lookaround_experimental.py
-                                     constructive lookaround sampler
-    counting.py                     saturating count arithmetic
-    negative_context.py             prefix/suffix/capture contexts
-    negative_choices.py             representative violating values
-    negative_families.py            local and supplemental mutations
-    negative_sampler.py             negative orchestration and validation
-  tests/                             unit tests
-  benchmarks/                        evaluation scripts and saved outputs
+pyproject.toml                       package metadata and extras
+src/matchmaker/                      the installable library
+  parser.py                          parsing and syntax normalization
+  charset.py                         reproducible character representatives
+  repeats.py                         effective unbounded-repeat policy
+  negative.py                        public negative-generation export
+  compact/
+    compact_graph.py                 compact hierarchical graph
+    compact_sampler.py               indexed positive sampler
+    lookaround_sampler.py            constructive lookaround sampler
+    counting.py                      saturating count arithmetic
+    negative_context.py              prefix/suffix/capture contexts
+    negative_choices.py              representative violating values
+    negative_families.py             local and supplemental mutations
+    negative_sampler.py              negative orchestration and validation
+tests/                               unit tests
+benchmarks/                          evaluation scripts and saved *_outputs/
+ablation/                            ablation studies (see ablation/README.md)
+benchmark_generators/                bridges to Generex, RgxGen, RandExp.js, MutRex
+egret/                               EGRET source (GPL-3.0, upstream elarsonSU/egret)
+data/                                regex corpora used by the benchmarks
+visualizations/                      graph rendering script, notebook, figures
+mutrex.jar, package.json             MutRex and RandExp.js for the comparison tools
+setup_coverage_benchmarks.sh         one-shot benchmark environment setup
 ```
 
-Benchmark code, external generator bridges, result files, and visualizations
-are not runtime dependencies of Matchmaker.
+Only `src/matchmaker/` is installed by `pip install .`. Benchmark code, external
+generator bridges, result files, and visualizations are not runtime
+dependencies of Matchmaker.
 
 ## Running Tests
 
-From the repository root:
+From the repository root, after `uv pip install -e ".[dev]"`:
 
 ```bash
-.venv/bin/python -m unittest \
-  regex_positive_generator.tests.test_compact_repeat \
-  regex_positive_generator.tests.test_experimental_lookaround_sampler \
-  regex_positive_generator.tests.test_negative_sampler
+pytest
 ```
 
-Some tests import benchmark helpers for correctness accounting, but benchmark
-executables and external comparison tools are not required by the generator
-APIs themselves.
+This runs `tests/` and `ablation/tests/`. Ablation tests that need `numpy` are
+skipped unless the `benchmarks` extra is installed.
+
+## Reproducing the Evaluation
+
+The benchmarks are run from a clone of this repository, not from an installed
+wheel. To prepare the complete environment (a `.venv` with Matchmaker and the
+pinned `benchmarks` extra, RandExp.js via npm, the Java generators via Maven,
+MutRex, and a compiled EGRET extension), run:
+
+```bash
+./setup_coverage_benchmarks.sh
+```
+
+The script needs Node.js/npm, a JDK, Maven, make, a C++ compiler, and either
+[uv](https://docs.astral.sh/uv/) (which provides Python 3.13 automatically) or
+a system Python 3.13+. Missing system packages are installed through Homebrew
+or APT; set `AUTO_INSTALL_SYSTEM_DEPS=0` to only check for them. A keg-only
+Homebrew `openjdk` is detected automatically, both by the script and by the
+Java generator bridges at benchmark time.
+
+Then, from the repository root:
+
+```bash
+# Coverage of Python validator functions (individual tools, combined tools)
+.venv/bin/python benchmarks/python_regex_function_coverage_benchmark.py \
+  --runs 1 --n-positive 1000 --n-negative 1000 --workers 1
+.venv/bin/python benchmarks/python_regex_function_combined_tools_coverage_benchmark.py \
+  --runs 1 --n-positive 1000 --n-negative 1000 --workers 1
+./run_python_regex_coverage_benchmarks.sh          # the 30-run configuration
+
+# Positive and negative correctness on data/regex_correctness_benchmark_selected_patterns.jsonl
+.venv/bin/python benchmarks/regex_correctness_benchmark.py --sampler lookaround-experimental
+.venv/bin/python benchmarks/regex_negative_correctness_benchmark.py
+
+# Generation speed on data/exponential-regexes.json and data/polynomial-regexes.json
+.venv/bin/python benchmarks/regex_generation_speed_benchmark.py
+
+# Ablation studies
+.venv/bin/python -m ablation.boundary_positive --runs 10 --workers 8
+.venv/bin/python -m ablation.factorial --runs 10 --workers 8
+```
+
+Every script accepts `--help`. Saved results from the reported runs are in
+`benchmarks/*_outputs/`.
 
 ## Research Artifact Notice
 

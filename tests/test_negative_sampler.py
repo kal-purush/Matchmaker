@@ -3,16 +3,16 @@ import unittest
 import warnings
 from unittest.mock import patch
 
-from regex_positive_generator import generate_negative_samples
-from regex_positive_generator.benchmarks.regex_negative_correctness_benchmark import (
+from matchmaker import generate_negative_samples
+from benchmarks.regex_negative_correctness_benchmark import (
     benchmark_pattern,
     benchmark_pattern_worker,
     drain_worker_messages,
 )
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.negative_choices import ViolationChoiceHelper
-from regex_positive_generator.experimental.negative_context import iter_node_contexts
-from regex_positive_generator.experimental.negative_families import (
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.negative_choices import ViolationChoiceHelper
+from matchmaker.compact.negative_context import iter_node_contexts
+from matchmaker.compact.negative_families import (
     STRESS_LENGTH,
     case_sensitivity_violation,
     character_class_violation,
@@ -50,7 +50,7 @@ class NegativeSamplerTests(unittest.TestCase):
             raise TimeoutError("synthetic timeout")
 
         with patch(
-            "regex_positive_generator.benchmarks.regex_negative_correctness_benchmark.benchmark_pattern",
+            "benchmarks.regex_negative_correctness_benchmark.benchmark_pattern",
             side_effect=timeout_after_partials,
         ):
             import queue

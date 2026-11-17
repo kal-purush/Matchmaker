@@ -8,12 +8,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from email_validator_tool_coverage import SEED, require
-from regex_positive_generator.benchmarks.python_regex_function_coverage_benchmark import (
+from benchmarks.email_validator_tool_coverage import SEED, require
+from benchmarks.python_regex_function_coverage_benchmark import (
     SampleCase,
     TargetSpec,
     DEFAULT_EXTERNAL_TOOL_TIMEOUT_SECONDS,
@@ -38,8 +38,8 @@ DEFAULT_N_NEGATIVE = 1000
 DEFAULT_WORKERS = 1
 DEFAULT_BASELINE_BUDGET_MODE = "per-tool"
 DEFAULT_COVERAGE_ROOT = "python_regex_function_combined_tools_coverage_reports"
-DEFAULT_RESULTS_JSONL = "regex_positive_generator/benchmarks/coverage_outputs/python_regex_function_combined_tools_coverage_results.jsonl"
-DEFAULT_SUMMARY_JSON = "regex_positive_generator/benchmarks/coverage_outputs/python_regex_function_combined_tools_coverage_summary.json"
+DEFAULT_RESULTS_JSONL = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "python_regex_function_combined_tools_coverage_results.jsonl")
+DEFAULT_SUMMARY_JSON = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "python_regex_function_combined_tools_coverage_summary.json")
 DEFAULT_RESULTS_JSON = "python_regex_function_combined_tools_coverage_results.json"
 
 TOOL_LABELS = {

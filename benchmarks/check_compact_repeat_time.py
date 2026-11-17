@@ -2,10 +2,10 @@ import argparse
 import time
 from collections import Counter
 
-from regex_positive_generator import RegexGraphBuilder
-from regex_positive_generator.benchmarks.check_graph_build_time import DEFAULT_PATHS, extract_patterns
-from regex_positive_generator.experimental import CompactGraphSampler, CompactRegexGraphBuilder
-from regex_positive_generator.sampler import GraphSampler
+from matchmaker import RegexGraphBuilder
+from benchmarks.check_graph_build_time import DEFAULT_PATHS, extract_patterns
+from matchmaker.compact import CompactGraphSampler, CompactRegexGraphBuilder
+from matchmaker.sampler import GraphSampler
 
 
 def empty_stats():

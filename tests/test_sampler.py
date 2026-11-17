@@ -2,7 +2,7 @@ import re
 import unittest
 import warnings
 
-from regex_positive_generator import RegexGraphBuilder, generate_positive_samples
+from matchmaker import RegexGraphBuilder, generate_positive_samples
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)

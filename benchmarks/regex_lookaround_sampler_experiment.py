@@ -6,19 +6,19 @@ import time
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator.benchmarks.regex_correctness_benchmark import (
+from benchmarks.regex_correctness_benchmark import (
     DEFAULT_CORPUS_PATHS,
     load_patterns,
     validate_sample,
     write_jsonl_row,
 )
-from regex_positive_generator.experimental import CompactGraphSampler, CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
+from matchmaker.compact import CompactGraphSampler, CompactRegexGraphBuilder
+from matchmaker.compact.lookaround_sampler import (
+    LookaroundCompactGraphSampler,
 )
 
 
@@ -97,7 +97,7 @@ def compare_pattern(index, source_path, pattern, *, n, seed):
     except Exception as exc:
         baseline = build_error_summary(exc)
     try:
-        experimental = run_one_sampler(pattern, ExperimentalLookaroundCompactGraphSampler, n=n, seed=seed)
+        experimental = run_one_sampler(pattern, LookaroundCompactGraphSampler, n=n, seed=seed)
     except Exception as exc:
         experimental = build_error_summary(exc)
 

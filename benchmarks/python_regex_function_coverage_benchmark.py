@@ -19,7 +19,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Callable, Dict, List, Optional, Tuple
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -36,7 +36,7 @@ import coverage
 import ipaddress
 import numpy as np
 
-from email_validator_tool_coverage import (
+from benchmarks.email_validator_tool_coverage import (
     SEED,
     configure_django_for_standalone_use,
     require,
@@ -48,10 +48,10 @@ from benchmark_generators.external_regex_generators import (
     generate_randexp,
     validate_javascript_regex,
 )
-from regex_positive_generator import generate_negative_samples
-from regex_positive_generator.experimental import CompactRegexGraphBuilder
-from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-    ExperimentalLookaroundCompactGraphSampler,
+from matchmaker import generate_negative_samples
+from matchmaker.compact import CompactRegexGraphBuilder
+from matchmaker.compact.lookaround_sampler import (
+    LookaroundCompactGraphSampler,
 )
 
 try:
@@ -119,8 +119,8 @@ COVERAGE_ROOT = os.path.abspath("python_regex_function_coverage_benchmark_report
 CHART_PATH = os.path.abspath("python_regex_function_coverage_benchmark_comparison.png")
 LATEX_TABLE_PATH = os.path.abspath("python_regex_function_coverage_benchmark_table.tex")
 DEFAULT_RESULTS_JSON = os.path.abspath("python_regex_function_coverage_benchmark_results.json")
-DEFAULT_RESULTS_JSONL = os.path.abspath("regex_positive_generator/benchmarks/coverage_outputs/python_regex_function_coverage_benchmark_results.jsonl")
-DEFAULT_SUMMARY_JSON = os.path.abspath("regex_positive_generator/benchmarks/coverage_outputs/python_regex_function_coverage_benchmark_summary.json")
+DEFAULT_RESULTS_JSONL = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "python_regex_function_coverage_benchmark_results.jsonl")
+DEFAULT_SUMMARY_JSON = str(REPO_ROOT / "benchmarks" / "coverage_outputs" / "python_regex_function_coverage_benchmark_summary.json")
 DEFAULT_WORKERS = 1
 DEFAULT_RUNS = 1
 DEFAULT_STATS_ITERATIONS = 10000
@@ -135,6 +135,11 @@ TOOL_SPECS = [
     ("RgxGen", "rgxgen"),
     ("RandExp.js", "randexp"),
     ("MutRex", "mutrex"),
+]
+# Opt-in only (not in the default --tools): RegexInstantiator with experimental
+# branch-balanced positives (matchmaker.compact.balanced_sampler).
+EXPERIMENTAL_TOOL_SPECS = [
+    ("RegexInst-Balanced", "ours_balanced"),
 ]
 
 
@@ -254,9 +259,11 @@ def _normalize_samples(samples: List[str], *, expected_match: bool, source: str)
     return normalized
 
 
-def generate_ours_samples(pattern: str, n_pos: int, n_neg: int, seed: int) -> List[SampleCase]:
+def generate_ours_samples(
+    pattern: str, n_pos: int, n_neg: int, seed: int, sampler_type=LookaroundCompactGraphSampler
+) -> List[SampleCase]:
     builder = CompactRegexGraphBuilder(pattern, validate=GENERATOR_VALIDATE)
-    positives = ExperimentalLookaroundCompactGraphSampler(builder, validate=GENERATOR_VALIDATE).generate_samples(
+    positives = sampler_type(builder, validate=GENERATOR_VALIDATE).generate_samples(
         n=n_pos,
         seed=seed,
     )
@@ -314,8 +321,7 @@ def generate_xeger_samples(pattern: str, n_pos: int, seed: int) -> List[SampleCa
 
 def locate_egret_runner() -> str:
     candidates = [
-        os.path.abspath("egret/egret.py"),
-        os.path.abspath("egret.worktrees/copilot-worktree-2026-05-13T10-31-47/egret.py"),
+        str(REPO_ROOT / "egret" / "egret.py"),
     ]
     for candidate in candidates:
         candidate_dir = os.path.dirname(candidate)
@@ -326,7 +332,10 @@ def locate_egret_runner() -> str:
         )
         if os.path.exists(candidate) and has_extension:
             return candidate
-    raise RuntimeError("EGRET runner with compiled egret_ext module not found in workspace.")
+    raise RuntimeError(
+        "EGRET runner with compiled egret_ext module not found in egret/. "
+        "Build it with ./setup_coverage_benchmarks.sh."
+    )
 
 
 def parse_egret_output(stdout: str) -> Tuple[List[str], List[str]]:
@@ -478,6 +487,12 @@ def get_tool_samples(
 ) -> List[SampleCase]:
     if tool_key == "ours":
         return generate_ours_samples(pattern, n_pos=n_pos, n_neg=n_neg, seed=seed)
+    if tool_key == "ours_balanced":
+        from matchmaker.compact.balanced_sampler import BranchBalancedSampler
+
+        return generate_ours_samples(
+            pattern, n_pos=n_pos, n_neg=n_neg, seed=seed, sampler_type=BranchBalancedSampler
+        )
     if tool_key == "exrex":
         return generate_exrex_samples(pattern, n_pos=n_pos)
     if tool_key == "xeger":
@@ -969,7 +984,10 @@ def parse_tools(raw_tools: str) -> List[tuple]:
     requested = [tool.strip().lower() for tool in raw_tools.split(",") if tool.strip()]
     if not requested:
         raise ValueError("--tools must include at least one tool key")
-    specs_by_key = {tool_key: (tool_name, tool_key) for tool_name, tool_key in TOOL_SPECS}
+    specs_by_key = {
+        tool_key: (tool_name, tool_key)
+        for tool_name, tool_key in TOOL_SPECS + EXPERIMENTAL_TOOL_SPECS
+    }
     unknown = [tool for tool in requested if tool not in specs_by_key]
     if unknown:
         raise ValueError(f"Unknown tool key(s): {', '.join(unknown)}")
@@ -1148,6 +1166,7 @@ def run_jobs_streaming(
     workers: int,
     results_jsonl: str,
     progress_every: int,
+    isolate_jobs: bool = False,
 ) -> List[CoverageRun]:
     results_dir = os.path.dirname(results_jsonl)
     if results_dir:
@@ -1165,11 +1184,12 @@ def run_jobs_streaming(
                 write_jsonl_row(jsonl_handle, asdict(run))
                 print_job_progress(run, completed, total_jobs, progress_every)
 
-        if workers <= 1:
+        if workers <= 1 and not isolate_jobs:
             run_sequential()
         else:
             try:
-                with ProcessPoolExecutor(max_workers=workers) as executor:
+                pool_options = {"max_tasks_per_child": 1} if isolate_jobs else {}
+                with ProcessPoolExecutor(max_workers=workers, **pool_options) as executor:
                     futures = [executor.submit(run_coverage_job, job) for job in jobs]
                     for future in as_completed(futures):
                         run = future.result()
@@ -1598,6 +1618,12 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--tools", default=",".join(tool_key for _tool_name, tool_key in TOOL_SPECS))
     parser.add_argument("--workers", type=int, default=DEFAULT_WORKERS)
+    parser.add_argument(
+        "--isolate-jobs",
+        action="store_true",
+        help="Run every job in a fresh process, so run-once library setup code is "
+        "counted for every job instead of only the first job in a reused process.",
+    )
     parser.add_argument("--n-positive", type=int, default=N_POSITIVE)
     parser.add_argument("--n-negative", type=int, default=N_NEGATIVE)
     parser.add_argument("--results-jsonl", default=DEFAULT_RESULTS_JSONL)
@@ -1665,6 +1691,7 @@ def main() -> None:
         workers=max(1, args.workers),
         results_jsonl=args.results_jsonl,
         progress_every=args.progress_every,
+        isolate_jobs=args.isolate_jobs,
     )
     aggregate = aggregate_runs(raw_runs, target_specs, tool_specs)
     statistical_tests = compute_statistical_tests(

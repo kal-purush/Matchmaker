@@ -1,12 +1,12 @@
 import re
 
-from regex_positive_generator.experimental.negative_choices import (
+from matchmaker.compact.negative_choices import (
     SEPARATORS,
     UNICODE_CHOICES,
     ViolationChoiceHelper,
     dedupe_preserve_order,
 )
-from regex_positive_generator.experimental.negative_context import (
+from matchmaker.compact.negative_context import (
     emit_valid,
     iter_node_contexts,
     literal_text_from_graph,

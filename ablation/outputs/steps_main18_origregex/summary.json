@@ -1,0 +1,417 @@
+{
+  "baseline": "full",
+  "config": {
+    "n_negative": 1000,
+    "n_positive": 1000,
+    "regex_set": "benchmark",
+    "runs": 10,
+    "seed": 0,
+    "stats_iterations": 10000,
+    "study": "local_complement",
+    "target_set": "benchmark",
+    "targets": [
+      "datetime_dateutil",
+      "datetime_django_utils",
+      "datetime_stdlib_strptime",
+      "domain_django_core",
+      "domain_pydantic",
+      "domain_stdlib_idna",
+      "email_django_core",
+      "email_stdlib_parseaddr",
+      "email_validator_package",
+      "ip_django_core",
+      "ip_pydantic",
+      "ip_stdlib_ipaddress",
+      "url_django_core",
+      "url_pydantic",
+      "url_stdlib_urllib",
+      "uuid_django_model",
+      "uuid_pydantic",
+      "uuid_stdlib"
+    ],
+    "variants": [
+      "full",
+      "local_only",
+      "families_no_local"
+    ],
+    "workers": 8
+  },
+  "error_rows": [],
+  "negative_tag_counts": {
+    "families_no_local": {
+      "alternation_violation": 360,
+      "basic_boundary_violation": 1200,
+      "case_sensitivity_violation": 30,
+      "character_class_violation": 5160,
+      "empty_seed": 180,
+      "escape_sequence_violation": 930,
+      "group_violation": 9480,
+      "numeric_boundary_violation": 4380,
+      "quantifier_overflow_violation": 450,
+      "quantifier_underflow_violation": 690,
+      "separator_boundary_violation": 5400,
+      "stress_boundary_violation": 720,
+      "structure_violation": 750,
+      "whitespace_boundary_violation": 1440,
+      "wrong_char_substitution": 5190
+    },
+    "full": {
+      "alternation_violation": 360,
+      "basic_boundary_violation": 1200,
+      "case_sensitivity_violation": 30,
+      "character_class_violation": 5160,
+      "empty_seed": 180,
+      "escape_sequence_violation": 930,
+      "group_violation": 9480,
+      "minimal_local_fault": 5310,
+      "numeric_boundary_violation": 4380,
+      "optimized_family_fill": 138330,
+      "quantifier_overflow_violation": 450,
+      "quantifier_underflow_violation": 690,
+      "separator_boundary_violation": 5400,
+      "stress_boundary_violation": 720,
+      "structure_violation": 750,
+      "whitespace_boundary_violation": 1440,
+      "wrong_char_substitution": 5190
+    },
+    "local_only": {
+      "empty_seed": 180,
+      "minimal_local_fault": 5310
+    }
+  },
+  "overall_mean_over_targets": {
+    "families_no_local": {
+      "branch_coverage": 18.863516051361486,
+      "code_coverage": 15.288558800692313
+    },
+    "full": {
+      "branch_coverage": 18.98177444192209,
+      "code_coverage": 15.393941981145705
+    },
+    "local_only": {
+      "branch_coverage": 16.928525339932044,
+      "code_coverage": 13.965831014394091
+    }
+  },
+  "paired_tests": [
+    {
+      "bootstrap_95_ci": [
+        1.1408369489045418,
+        1.7320795558144957
+      ],
+      "mean_delta_points": 1.4281109667516185,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 8,
+        "tied": 10,
+        "worse": 0
+      },
+      "variant": "local_only"
+    },
+    {
+      "bootstrap_95_ci": [
+        1.711458757099996,
+        2.421689074876145
+      ],
+      "mean_delta_points": 2.053249101990048,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 8,
+        "tied": 10,
+        "worse": 0
+      },
+      "variant": "local_only"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.0833865655130415,
+        0.12788598880884142
+      ],
+      "mean_delta_points": 0.10538318045339147,
+      "metric": "code_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 3,
+        "tied": 15,
+        "worse": 0
+      },
+      "variant": "families_no_local"
+    },
+    {
+      "bootstrap_95_ci": [
+        0.09415331655483913,
+        0.14342787856404338
+      ],
+      "mean_delta_points": 0.11825839056060827,
+      "metric": "branch_coverage",
+      "p_value": 9.999000099990002e-05,
+      "p_value_holm": 0.00039996000399960006,
+      "target_counts": {
+        "better": 3,
+        "tied": 15,
+        "worse": 0
+      },
+      "variant": "families_no_local"
+    }
+  ],
+  "per_target": {
+    "datetime_dateutil": {
+      "families_no_local": {
+        "branch_coverage": 54.44444444444444,
+        "code_coverage": 51.6304347826087
+      },
+      "full": {
+        "branch_coverage": 54.44444444444444,
+        "code_coverage": 51.6304347826087
+      },
+      "local_only": {
+        "branch_coverage": 36.66666666666667,
+        "code_coverage": 36.41304347826087
+      }
+    },
+    "datetime_django_utils": {
+      "families_no_local": {
+        "branch_coverage": 27.77777777777778,
+        "code_coverage": 21.818181818181817
+      },
+      "full": {
+        "branch_coverage": 27.77777777777778,
+        "code_coverage": 21.818181818181817
+      },
+      "local_only": {
+        "branch_coverage": 22.22222222222222,
+        "code_coverage": 20.0
+      }
+    },
+    "datetime_stdlib_strptime": {
+      "families_no_local": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      },
+      "full": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      },
+      "local_only": {
+        "branch_coverage": 18.69565217391304,
+        "code_coverage": 18.663594470046085
+      }
+    },
+    "domain_django_core": {
+      "families_no_local": {
+        "branch_coverage": 5.434782608695653,
+        "code_coverage": 2.4922118380062304
+      },
+      "full": {
+        "branch_coverage": 5.434782608695653,
+        "code_coverage": 2.4922118380062304
+      },
+      "local_only": {
+        "branch_coverage": 5.326086956521739,
+        "code_coverage": 2.4610591900311527
+      }
+    },
+    "domain_pydantic": {
+      "families_no_local": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_only": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      }
+    },
+    "domain_stdlib_idna": {
+      "families_no_local": {
+        "branch_coverage": 12.264150943396228,
+        "code_coverage": 8.715596330275229
+      },
+      "full": {
+        "branch_coverage": 13.20754716981132,
+        "code_coverage": 9.63302752293578
+      },
+      "local_only": {
+        "branch_coverage": 11.320754716981131,
+        "code_coverage": 8.256880733944953
+      }
+    },
+    "email_django_core": {
+      "families_no_local": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      },
+      "full": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      },
+      "local_only": {
+        "branch_coverage": 9.782608695652174,
+        "code_coverage": 3.7383177570093458
+      }
+    },
+    "email_stdlib_parseaddr": {
+      "families_no_local": {
+        "branch_coverage": 18.103448275862068,
+        "code_coverage": 13.469387755102042
+      },
+      "full": {
+        "branch_coverage": 18.103448275862068,
+        "code_coverage": 13.469387755102042
+      },
+      "local_only": {
+        "branch_coverage": 18.103448275862068,
+        "code_coverage": 13.469387755102042
+      }
+    },
+    "email_validator_package": {
+      "families_no_local": {
+        "branch_coverage": 43.973214285714285,
+        "code_coverage": 45.598958333333336
+      },
+      "full": {
+        "branch_coverage": 44.86607142857143,
+        "code_coverage": 46.380208333333336
+      },
+      "local_only": {
+        "branch_coverage": 41.74107142857143,
+        "code_coverage": 44.296875
+      }
+    },
+    "ip_django_core": {
+      "families_no_local": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      },
+      "full": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      },
+      "local_only": {
+        "branch_coverage": 2.1739130434782608,
+        "code_coverage": 4.049844236760125
+      }
+    },
+    "ip_pydantic": {
+      "families_no_local": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      },
+      "full": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      },
+      "local_only": {
+        "branch_coverage": 18.6046511627907,
+        "code_coverage": 12.392426850258175
+      }
+    },
+    "ip_stdlib_ipaddress": {
+      "families_no_local": {
+        "branch_coverage": 16.374269005847957,
+        "code_coverage": 10.901883052527255
+      },
+      "full": {
+        "branch_coverage": 16.666666666666664,
+        "code_coverage": 11.10009910802775
+      },
+      "local_only": {
+        "branch_coverage": 11.11111111111111,
+        "code_coverage": 7.829534192269574
+      }
+    },
+    "url_django_core": {
+      "families_no_local": {
+        "branch_coverage": 19.34782608695652,
+        "code_coverage": 8.34890965732087
+      },
+      "full": {
+        "branch_coverage": 19.34782608695652,
+        "code_coverage": 8.34890965732087
+      },
+      "local_only": {
+        "branch_coverage": 17.17391304347826,
+        "code_coverage": 7.7258566978193155
+      }
+    },
+    "url_pydantic": {
+      "families_no_local": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "full": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      },
+      "local_only": {
+        "branch_coverage": 20.93023255813954,
+        "code_coverage": 12.220309810671257
+      }
+    },
+    "url_stdlib_urllib": {
+      "families_no_local": {
+        "branch_coverage": 13.604651162790697,
+        "code_coverage": 10.62700964630225
+      },
+      "full": {
+        "branch_coverage": 13.604651162790697,
+        "code_coverage": 10.62700964630225
+      },
+      "local_only": {
+        "branch_coverage": 12.829457364341087,
+        "code_coverage": 9.340836012861736
+      }
+    },
+    "uuid_django_model": {
+      "families_no_local": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      },
+      "full": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      },
+      "local_only": {
+        "branch_coverage": 0.8928571428571427,
+        "code_coverage": 3.0080704328686716
+      }
+    },
+    "uuid_pydantic": {
+      "families_no_local": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      },
+      "full": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      },
+      "local_only": {
+        "branch_coverage": 29.629629629629626,
+        "code_coverage": 31.472081218274116
+      }
+    },
+    "uuid_stdlib": {
+      "families_no_local": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      },
+      "full": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      },
+      "local_only": {
+        "branch_coverage": 6.578947368421052,
+        "code_coverage": 3.8265306122448974
+      }
+    }
+  },
+  "superset_invariant_violations": []
+}

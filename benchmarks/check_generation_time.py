@@ -2,9 +2,9 @@ import argparse
 import time
 from collections import Counter
 
-from regex_positive_generator import RegexGraphBuilder
-from regex_positive_generator.benchmarks.check_graph_build_time import DEFAULT_PATHS, extract_patterns
-from regex_positive_generator.sampler import GraphSampler
+from matchmaker import RegexGraphBuilder
+from benchmarks.check_graph_build_time import DEFAULT_PATHS, extract_patterns
+from matchmaker.sampler import GraphSampler
 
 
 def measure_path(path, limit, *, n, seed=0, validate=False):
@@ -73,7 +73,7 @@ def measure_path(path, limit, *, n, seed=0, validate=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Measure regex_positive_generator generation time.")
+    parser = argparse.ArgumentParser(description="Measure matchmaker generation time.")
     parser.add_argument("paths", nargs="*", default=DEFAULT_PATHS)
     parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument("--n", type=int, default=1000)

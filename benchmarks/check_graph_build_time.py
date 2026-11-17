@@ -6,17 +6,17 @@ import warnings
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator import RegexGraphBuilder
-from regex_positive_generator.visualization import write_png
+from matchmaker import RegexGraphBuilder
+from matchmaker.visualization import write_png
 
 
 DEFAULT_PATHS = [
-    # str(REPO_ROOT / "polynomial-regexes.json"),
-    str(REPO_ROOT / "exponential-regexes.json"),
+    # str(REPO_ROOT / "data" / "polynomial-regexes.json"),
+    str(REPO_ROOT / "data" / "exponential-regexes.json"),
 ]
 DEFAULT_GRAPH_OUTPUT_DIR = Path(__file__).resolve().parent / "graph_outputs"
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -105,7 +105,7 @@ def measure_path(path, limit, *, png_output_dir=None, png_limit=0):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Measure regex_positive_generator graph build time.")
+    parser = argparse.ArgumentParser(description="Measure matchmaker graph build time.")
     parser.add_argument("paths", nargs="*", default=DEFAULT_PATHS)
     parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument("--png", action="store_true", help="Render successful graph builds as PNG files.")

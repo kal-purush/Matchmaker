@@ -9,11 +9,11 @@ import time
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from regex_positive_generator.experimental import CompactGraphSampler, CompactRegexGraphBuilder
+from matchmaker.compact import CompactGraphSampler, CompactRegexGraphBuilder
 
 try:
     import regex
@@ -30,7 +30,7 @@ except ImportError:  # pragma: no cover - optional progress dependency
 DEFAULT_CORPUS_PATHS = [
     # "internetSources-regExLib.json",
     # "internetSources-stackoverflow.json",
-    str(REPO_ROOT / "regex_correctness_benchmark_selected_patterns.jsonl"),
+    str(REPO_ROOT / "data" / "regex_correctness_benchmark_selected_patterns.jsonl"),
 ]
 OUTPUT_DIR = Path(__file__).resolve().parent / "correctness_outputs"
 DEFAULT_TIMEOUT_SECONDS = 10.0
@@ -224,11 +224,11 @@ def build_sampler(builder, validate_generator, sampler):
     if sampler == SAMPLER_BASELINE:
         return CompactGraphSampler(builder, validate=validate_generator)
     if sampler == SAMPLER_LOOKAROUND_EXPERIMENTAL:
-        from regex_positive_generator.experimental.compact_sampler_lookaround_experimental import (
-            ExperimentalLookaroundCompactGraphSampler,
+        from matchmaker.compact.lookaround_sampler import (
+            LookaroundCompactGraphSampler,
         )
 
-        return ExperimentalLookaroundCompactGraphSampler(builder, validate=validate_generator)
+        return LookaroundCompactGraphSampler(builder, validate=validate_generator)
     raise ValueError(f"Unknown sampler: {sampler}")
 
 
@@ -449,7 +449,7 @@ def run(paths, *, limit, n, seed, validate_generator, sampler, jsonl_path, timeo
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Validate compact experimental positive samples against their regexes.")
+    parser = argparse.ArgumentParser(description="Validate compact-graph positive samples against their regexes.")
     parser.add_argument("paths", nargs="*", default=DEFAULT_CORPUS_PATHS)
     parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument("--n", type=int, default=1000)
